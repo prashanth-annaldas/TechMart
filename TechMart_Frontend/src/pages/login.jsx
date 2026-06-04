@@ -28,7 +28,8 @@ function Login() {
             );
 
             if(response.data.message === "LOGINNED") {
-                navigate("/home");
+                alert("Login successful");
+                navigate("/");
             }
             else if(response.data.message === "INVALID CREDENTIALS") {
                 alert("Invalid Credentials");

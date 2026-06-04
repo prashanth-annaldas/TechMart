@@ -9,6 +9,7 @@ import com.example.TechMart.user.repository.UserRepository;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +43,9 @@ public class AuthService {
     public AuthResponse login(LoginRequest dto, HttpServletResponse res){
         Users user = userRepo.findByEmail(dto.getEmail()).orElseThrow();
 
+        System.out.println("EMAIL = " + dto.getEmail());
+        System.out.println("PASSWORD = " + dto.getPassword());
+
         if(user == null){
             return new AuthResponse("USER NOT EXISTED", null);
         }
@@ -59,5 +63,16 @@ public class AuthService {
         cookie.setMaxAge(60 * 60);
         res.addCookie(cookie);
         return new AuthResponse("LOGINNED", user.getRole().name());
+    }
+
+    public String logout(HttpServletResponse res){
+        Cookie cookie = new Cookie("jwt", "");
+        cookie.setHttpOnly(true);
+        cookie.setSecure(false);
+        cookie.setPath("/");
+        cookie.setMaxAge(0);
+        res.addCookie(cookie);
+        SecurityContextHolder.clearContext();
+        return "LOGOUT SUCCESSFULL";
     }
 }

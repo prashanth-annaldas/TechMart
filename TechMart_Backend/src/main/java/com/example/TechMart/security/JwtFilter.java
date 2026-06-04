@@ -40,6 +40,9 @@ public class JwtFilter extends OncePerRequestFilter {
             String email = jwtService.extractEmailByToken(token);
             String role = jwtService.extractRoleByToken(token);
 
+            System.out.println("TOKEN = " + token);
+            System.out.println("ROLE = " + role);
+
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                     email,
                     null,
@@ -50,6 +53,11 @@ public class JwtFilter extends OncePerRequestFilter {
                     )
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
+            System.out.println(
+                    SecurityContextHolder
+                            .getContext()
+                            .getAuthentication()
+            );
         }
         filterChain.doFilter(req, res);
     }

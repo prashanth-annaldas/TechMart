@@ -1,6 +1,7 @@
 package com.example.TechMart.category.entity;
 
 import com.example.TechMart.product.entity.Products;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class Category {
     @Column(nullable = false)
     private String description;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "category")
     private List<Products> products;
 

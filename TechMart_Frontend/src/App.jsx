@@ -4,6 +4,8 @@ import './App.css'
 import Register from './pages/register';
 import Login from "./pages/login";
 import Home from "./pages/home";
+import AdminProduct from './pages/adminProduct';
+import AdminCategory from './pages/adminCategory';
 
 function App() {
   return (
@@ -22,8 +24,18 @@ function App() {
                 />
 
                 <Route
-                    path="/home"
+                    path="/"
                     element={<Home />}
+                />
+
+                <Route
+                    path="/adminProduct"
+                    element={<AdminProduct />}
+                />
+
+                <Route
+                    path="/adminCategory"
+                    element={<AdminCategory />}
                 />
 
             </Routes>

@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import api from "../services/api";
 import { useEffect, useState } from "react";
 
-function Navbar() {
+function Navbar({ searchVal, setSearchVal }) {
 
     const [isCustomer, setIsCustomer] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
@@ -49,6 +49,7 @@ function Navbar() {
     return (
         <nav>
             <Link to="/">Home</Link>
+            <input type="text" value={searchVal} onChange={(e) => setSearchVal(e.target.value)} />
             {!isCustomer && !isAdmin && (
                 <>
                     <Link to="/login">Login</Link>

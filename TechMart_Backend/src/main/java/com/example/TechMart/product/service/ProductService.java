@@ -148,4 +148,8 @@ public class ProductService {
 
         return productRepo.saveAll(products);
     }
+
+    public List<Products> searchByName(String name){
+        return productRepo.findByNameContainingIgnoreCase(name);
+    }
 }

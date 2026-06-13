@@ -15,6 +15,7 @@ const Home = () => {
     const [showAddressModal, setShowAddressModal] = useState(false);
     const [selectedAddressId, setSelectedAddressId] = useState(null);
     const [selectedProductId, setSelectedProductId] = useState(null);
+    const [searchVal, setSearchVal] = useState("");
     const navigate = useNavigate();
 
     const loadProducts = async () => {
@@ -28,7 +29,6 @@ const Home = () => {
     }
 
     useEffect(() => {
-        loadProducts();
         getAllAddresses();
         loadCategories();
     }, []);
@@ -43,6 +43,30 @@ const Home = () => {
             console.log(error);
         }
     }
+
+    const searchProducts = async (searchVal) =>{
+        try{
+            const res = await api.get("/api/products/search", {
+                params: {
+                    name: searchVal
+                }
+            });
+            setProducts(res.data);
+        }
+        catch(err){
+            console.log(err);
+            alert("Failed to load searched items");
+        }
+    }
+
+    useEffect(() => {
+        if(searchVal.trim() === ""){
+            loadProducts();
+        }
+        else{
+            searchProducts(searchVal);
+        }
+    }, [searchVal]);
 
     const handleAddToCart = async (productId) =>{
         try{
@@ -120,7 +144,7 @@ const Home = () => {
 
     return (
         <div>
-            <Navbar />
+            <Navbar searchVal = {searchVal} setSearchVal = {setSearchVal}/>
             <h1>Welcome to TechMart</h1>
             <h2>Categories</h2>
             <div className="categories-container">

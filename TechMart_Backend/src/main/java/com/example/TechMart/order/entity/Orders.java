@@ -1,6 +1,8 @@
 package com.example.TechMart.order.entity;
 
+import com.example.TechMart.profile.entity.Address;
 import com.example.TechMart.user.entity.Users;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -23,7 +25,20 @@ public class Orders {
     @JoinColumn(name = "user_id")
     private Users user;
 
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "address_id")
+    private Address address;
+
     @OneToMany(mappedBy = "orders")
+    @JsonIgnore
     private List<OrderItem> orderItems;
 
     public List<OrderItem> getOrderItems() {

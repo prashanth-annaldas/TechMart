@@ -4,8 +4,13 @@ import './App.css'
 import Register from './pages/register';
 import Login from "./pages/login";
 import Home from "./pages/home";
-import AdminProduct from './pages/adminProduct';
-import AdminCategory from './pages/adminCategory';
+import AdminProducts from './pages/adminProducts';
+import AdminCategories from './pages/adminCategories';
+import Profile from './pages/profile';
+import Orders from './pages/orders';
+import Wishlist from './pages/wishlist';
+import Cart from './pages/cart';
+import AdminOrders from './pages/adminOrders';
 
 function App() {
   return (
@@ -29,13 +34,38 @@ function App() {
                 />
 
                 <Route
-                    path="/adminProduct"
-                    element={<AdminProduct />}
+                    path="/products"
+                    element={<AdminProducts />}
                 />
 
                 <Route
-                    path="/adminCategory"
-                    element={<AdminCategory />}
+                    path="/categories"
+                    element={<AdminCategories />}
+                />
+
+                <Route
+                    path="/profile"
+                    element={<Profile />}
+                />
+
+                <Route
+                    path="/orders"
+                    element={<Orders />}
+                />
+
+                <Route
+                    path="/wishlist"
+                    element={<Wishlist />}
+                />
+
+                <Route
+                    path="/cart"
+                    element={<Cart />}
+                />
+
+                <Route
+                    path="/adminOrders"
+                    element={<AdminOrders />}
                 />
 
             </Routes>

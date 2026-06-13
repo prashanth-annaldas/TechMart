@@ -1,14 +1,42 @@
 import { Link, useNavigate } from "react-router-dom";
 import api from "../services/api";
+import { useEffect, useState } from "react";
 
-function Navbar({ isCustomer, isAdmin, currentUser }) {
+function Navbar() {
 
+    const [isCustomer, setIsCustomer] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        currentUser();
+    }, []);
+
+    const currentUser = async () => {
+        try {
+            const res = await api.get("/api/auth/me");
+
+            if (res.data.role === "ROLE_CUSTOMER") {
+                setIsCustomer(true);
+                setIsAdmin(false);
+            }
+            else if (res.data.role === "ROLE_ADMIN") {
+                setIsAdmin(true);
+                setIsCustomer(false);
+            }
+        }
+        catch (error) {
+            setIsCustomer(false);
+            setIsAdmin(false);
+        }
+    };
 
     const handleLogout = async () => {
         try {
             const res = await api.post("/api/auth/mylogout");
             if(res.data === "LOGOUT SUCCESSFULL"){
+                setIsCustomer(false);
+                setIsAdmin(false);
                 navigate("/");
                 currentUser();
             }
@@ -41,11 +69,10 @@ function Navbar({ isCustomer, isAdmin, currentUser }) {
             )}
             {isAdmin && (
                 <>
-                    <Link to="/admin">Admin Panel</Link>
-                    <Link to="/products">Manage Products</Link>
-                    <Link to="/orders">Manage Orders</Link>
-                    <Link to="/adminProduct">Add Product</Link>
-                    <Link to="/adminCategory">Add Category</Link>
+                    <Link to="/admin">Admin Dashboard</Link>
+                    <Link to="/products">Products</Link>
+                    <Link to="/adminOrders">Orders</Link>
+                    <Link to="/categories">Category</Link>
                 </>
             )}
         </nav>

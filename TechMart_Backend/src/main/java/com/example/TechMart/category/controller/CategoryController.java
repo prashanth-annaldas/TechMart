@@ -4,7 +4,6 @@ import com.example.TechMart.category.dto.CategoryRequest;
 import com.example.TechMart.category.entity.Category;
 import com.example.TechMart.category.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

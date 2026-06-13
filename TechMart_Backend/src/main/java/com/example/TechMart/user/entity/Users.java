@@ -2,6 +2,9 @@ package com.example.TechMart.user.entity;
 
 import com.example.TechMart.cart.entity.Cart;
 import com.example.TechMart.order.entity.Orders;
+import com.example.TechMart.profile.entity.Address;
+import com.example.TechMart.wishlist.entity.Wishlist;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -30,11 +33,35 @@ public class Users {
         CUSTOMER
     }
 
-@OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user")
     private Cart cart;
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Orders> orders;
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<Address> addresses;
+
+    @OneToOne(mappedBy = "user")
+    private Wishlist wishlist;
+
+    public Wishlist getWishlist() {
+        return wishlist;
+    }
+
+    public void setWishlist(Wishlist wishlist) {
+        this.wishlist = wishlist;
+    }
+
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+    }
 
     public List<Orders> getOrders() {
         return orders;

@@ -3,6 +3,8 @@ package com.example.TechMart.product.entity;
 import com.example.TechMart.cart.entity.CartItem;
 import com.example.TechMart.category.entity.Category;
 import com.example.TechMart.order.entity.OrderItem;
+import com.example.TechMart.wishlist.entity.WishlistItem;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -23,7 +25,7 @@ public class Products {
     @Column(nullable = false)
     private Integer stock;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 1000)
     private String imageUrl;
 
     @Column(nullable = false)
@@ -42,10 +44,24 @@ public class Products {
     private Category category;
 
     @OneToMany(mappedBy = "products")
+    @JsonIgnore
     private List<CartItem> cartItem;
 
-    @OneToMany(mappedBy = "products")
+    @OneToMany(mappedBy = "product")
+    @JsonIgnore
     private List<OrderItem> orderItems;
+
+    @OneToMany(mappedBy = "product")
+    @JsonIgnore
+    private List<WishlistItem> wishlistItems;
+
+    public List<WishlistItem> getWishlistItems() {
+        return wishlistItems;
+    }
+
+    public void setWishlistItems(List<WishlistItem> wishlistItems) {
+        this.wishlistItems = wishlistItems;
+    }
 
     public List<OrderItem> getOrderItems() {
         return orderItems;

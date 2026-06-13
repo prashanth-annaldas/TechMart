@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
 
-function AdminProduct() {
+function AddProduct() {
 
     const [name, setName] = useState("");
     const [price, setPrice] = useState("");
@@ -165,4 +165,4 @@ function AdminProduct() {
     );
 }
 
-export default AdminProduct;
+export default AddProduct;

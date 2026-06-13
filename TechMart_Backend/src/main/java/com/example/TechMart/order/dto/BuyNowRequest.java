@@ -1,8 +1,18 @@
-package com.example.TechMart.cart.dto;
+package com.example.TechMart.order.dto;
 
-public class CartRequest {
+public class BuyNowRequest {
+
     private Long productId;
     private Integer quantity;
+    private Long addressId;
+
+    public Long getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(Long addressId) {
+        this.addressId = addressId;
+    }
 
     public Integer getQuantity() {
         return quantity;

@@ -4,7 +4,13 @@ import com.example.TechMart.product.entity.Products;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "cartItem")
+@Table(
+        name = "cartItem",
+        uniqueConstraints = {
+        @UniqueConstraint(
+                columnNames = {"cart_id", "product_id"}
+        )
+})
 public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

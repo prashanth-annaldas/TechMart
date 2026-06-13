@@ -1,6 +1,7 @@
 package com.example.TechMart.cart.entity;
 
 import com.example.TechMart.user.entity.Users;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -17,6 +18,7 @@ public class Cart {
     private Users user;
 
     @OneToMany(mappedBy = "cart")
+    @JsonIgnore
     private List<CartItem> cartItems;
 
     public List<CartItem> getCartItems() {

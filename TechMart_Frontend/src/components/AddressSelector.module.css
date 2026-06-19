@@ -1,0 +1,189 @@
+.modalBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(10, 10, 18, 0.6);
+  backdrop-filter: blur(6px);
+  z-index: var(--z-modal-backdrop);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.modalContent {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
+  width: 90%;
+  max-width: 480px;
+  max-height: 80vh;
+  overflow-y: auto;
+  z-index: var(--z-modal);
+  box-shadow: var(--shadow-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  animation: scaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: var(--space-sm);
+}
+
+.title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.closeBtn {
+  background: transparent;
+  border: none;
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: var(--radius-sm);
+}
+
+.closeBtn:hover {
+  color: var(--error);
+  background: var(--error-bg);
+}
+
+/* Address List */
+.addressList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  max-height: 250px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.addressCard {
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  cursor: pointer;
+  display: flex;
+  gap: 12px;
+  transition: all var(--transition-fast);
+}
+
+.addressCard:hover {
+  border-color: var(--accent);
+  background: var(--accent-light);
+}
+
+.addressCardActive {
+  border-color: var(--accent);
+  background: var(--accent-light);
+  box-shadow: 0 0 0 2px var(--accent-glow);
+}
+
+.radioInput {
+  margin-top: 4px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.addressDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.fullName {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* Quantity selector */
+.qtySection {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: var(--space-md) 0;
+}
+
+.qtyLabel {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.qtyInput {
+  width: 80px;
+  padding: 6px 12px !important;
+  border-radius: var(--radius-sm) !important;
+  text-align: center;
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.cancelBtn {
+  flex: 1;
+  padding: 12px;
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  font-weight: 500;
+}
+
+.cancelBtn:hover {
+  background: var(--border);
+}
+
+.submitBtn {
+  flex: 2;
+  padding: 12px;
+  background: var(--accent);
+  color: white;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+}
+
+.submitBtn:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+
+.submitBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.noAddresses {
+  text-align: center;
+  padding: var(--space-lg) 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.addAddressLink {
+  color: var(--accent);
+  font-weight: 600;
+  display: block;
+  margin-top: 8px;
+}
+
+.addAddressLink:hover {
+  text-decoration: underline;
+}

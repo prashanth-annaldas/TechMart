@@ -1,0 +1,461 @@
+.profilePage {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-primary);
+}
+
+.content {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: var(--space-xl) var(--container-padding) var(--space-3xl);
+  width: 100%;
+  flex: 1;
+}
+
+.pageTitle {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: var(--space-lg);
+  color: var(--text-primary);
+}
+
+.tabNav {
+  display: flex;
+  gap: var(--space-sm);
+  border-bottom: 2px solid var(--border);
+  margin-bottom: var(--space-xl);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.tabNav::-webkit-scrollbar {
+  display: none;
+}
+
+.tabBtn {
+  padding: 12px 20px;
+  background: transparent;
+  border: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  position: relative;
+  transition: color var(--transition-fast);
+  white-space: nowrap;
+}
+
+.tabBtn:hover {
+  color: var(--accent);
+}
+
+.activeTab {
+  color: var(--accent);
+}
+
+.activeTab::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--accent);
+  border-radius: var(--radius-full);
+}
+
+/* Tab Panel Content */
+.panel {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Profile Info Tab */
+.profileCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-2xl);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xl);
+  max-width: 600px;
+  box-shadow: var(--shadow-sm);
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: var(--radius-full);
+  background: var(--accent);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  box-shadow: var(--shadow-md);
+}
+
+.profileDetails {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.profileName {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.profileEmail {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.profileRole {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  background: var(--accent-light);
+  color: var(--accent);
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  width: fit-content;
+  margin-top: 6px;
+}
+
+/* Order History Tab */
+.ordersList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.orderCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  display: flex;
+  gap: var(--space-lg);
+  transition: border-color var(--transition-fast);
+}
+
+.orderCard:hover {
+  border-color: var(--accent);
+}
+
+.orderImage {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.orderInfo {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: var(--space-md);
+  align-items: center;
+}
+
+.orderMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.productName {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.orderId {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.orderPriceQty {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.totalPrice {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.qtyText {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.orderStatusLocation {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.statusBadge {
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.statusPlaced {
+  background-color: var(--info-bg);
+  color: var(--info);
+}
+
+.statusProcessing {
+  background-color: var(--warning-bg);
+  color: var(--warning);
+}
+
+.statusShipped {
+  background-color: var(--accent-light);
+  color: var(--accent);
+}
+
+.statusDelivered {
+  background-color: var(--success-bg);
+  color: var(--success);
+}
+
+.statusCancelled {
+  background-color: var(--error-bg);
+  color: var(--error);
+}
+
+.locationText {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* Addresses Tab */
+.addressHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-lg);
+}
+
+.sectionTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.addBtn {
+  padding: 10px 18px;
+  background: var(--accent);
+  color: white;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+}
+
+.addBtn:hover {
+  background: var(--accent-hover);
+}
+
+.addressesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-lg);
+}
+
+.addressCard {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  position: relative;
+  transition: border-color var(--transition-fast);
+}
+
+.addressCard:hover {
+  border-color: var(--accent);
+}
+
+.addressName {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.addressDetail {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.addressPhone {
+  font-size: 0.825rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.addressActions {
+  display: flex;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-sm);
+}
+
+.editBtn {
+  padding: 6px 12px;
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.editBtn:hover {
+  background: var(--accent-light);
+}
+
+.deleteBtn {
+  padding: 6px 12px;
+  background: transparent;
+  color: var(--error);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.deleteBtn:hover {
+  background: var(--error-bg);
+}
+
+/* Address Form */
+.addressForm {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-2xl);
+  max-width: 600px;
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.formGroupFull {
+  grid-column: span 2;
+}
+
+.label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+}
+
+.cancelFormBtn {
+  padding: 10px 18px;
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  font-weight: 500;
+}
+
+.cancelFormBtn:hover {
+  background: var(--border);
+}
+
+.submitFormBtn {
+  padding: 10px 18px;
+  background: var(--accent);
+  color: white;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+}
+
+.submitFormBtn:hover {
+  background: var(--accent-hover);
+}
+
+.emptyState {
+  text-align: center;
+  padding: 60px 24px;
+}
+
+.emptyIcon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.emptyTitle {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .orderCard {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .orderInfo {
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+  }
+
+  .orderStatusLocation {
+    align-items: center;
+  }
+
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .formGroupFull {
+    grid-column: span 1;
+  }
+}

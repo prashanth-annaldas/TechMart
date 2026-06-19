@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
+import { useToast } from "../context/ToastContext";
 
 function AddProduct() {
+    const { showToast } = useToast();
 
     const [name, setName] = useState("");
     const [price, setPrice] = useState("");
@@ -52,7 +54,7 @@ function AddProduct() {
                 productData
             );
 
-            alert("Product Added");
+            showToast("Product Added successfully!", "success");
 
             setName("");
             setPrice("");
@@ -64,7 +66,7 @@ function AddProduct() {
         }
         catch (error) {
             console.log(error);
-            alert("Product Creation Failed");
+            showToast("Product Creation Failed", "error");
         }
     };
 

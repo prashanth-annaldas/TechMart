@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import api from "../services/api";
+import styles from "./AddressSelector.module.css";
 
 function AddressSelector({ productId, onClose, onPlaceOrder }) {
-
     const [addresses, setAddresses] = useState([]);
     const [selectedAddressId, setSelectedAddressId] = useState(null);
     const [quantity, setQuantity] = useState(1);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         loadAddresses();
@@ -15,80 +17,92 @@ function AddressSelector({ productId, onClose, onPlaceOrder }) {
         try {
             const res = await api.get("/api/profile/allAddresses");
             setAddresses(res.data);
-        }
-        catch (error) {
-            console.log(error);
+            if (res.data.length > 0) {
+                setSelectedAddressId(res.data[0].id);
+            }
+        } catch (error) {
+            console.error("Failed to load addresses:", error);
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
-        <div
-            style={{
-                position: "fixed",
-                top: "20%",
-                left: "30%",
-                width: "40%",
-                background: "white",
-                border: "1px solid black",
-                padding: "20px"
-            }}
-        >
-            <h2>Select Address</h2>
-
-            {addresses.map(address => (
-
-                <div key={address.id}>
-
-                    <input
-                        type="radio"
-                        name="address"
-                        value={address.id}
-                        onChange={() =>
-                            setSelectedAddressId(address.id)
-                        }
-                    />
-
-                    <strong>{address.fullName}</strong>
-
-                    <p>
-                        {address.houseNo},
-                        {" "}
-                        {address.street}
-                    </p>
-
-                    <p>
-                        {address.city},
-                        {" "}
-                        {address.state}
-                    </p>
-
+        <div className={styles.modalBackdrop} onClick={onClose}>
+            <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+                <div className={styles.header}>
+                    <h2 className={styles.title}>Select Delivery Address</h2>
+                    <button className={styles.closeBtn} onClick={onClose} aria-label="Close modal">
+                        ✕
+                    </button>
                 </div>
-            ))}
 
-            <input
-                type="number"
-                min="1"
-                value={quantity}
-                onChange={(e) => setQuantity(Number(e.target.value))}
-                style={{
-                    border: "1px solid black",
-                    marginTop: "10px",
-                    display: "block"
-                }}
-            />
+                {loading ? (
+                    <div style={{ display: "flex", justifyContent: "center", padding: "24px" }}>
+                        <div style={{ width: "30px", height: "30px", border: "2px solid #ccc", borderTopColor: "#2563eb", borderRadius: "50%", animation: "spin 1s linear infinite" }}></div>
+                    </div>
+                ) : addresses.length === 0 ? (
+                    <div className={styles.noAddresses}>
+                        <p>No saved addresses found.</p>
+                        <Link to="/profile" className={styles.addAddressLink} onClick={onClose}>
+                            Go to Profile to add an address
+                        </Link>
+                    </div>
+                ) : (
+                    <>
+                        <div className={styles.addressList}>
+                            {addresses.map((address) => (
+                                <div
+                                    key={address.id}
+                                    className={`${styles.addressCard} ${selectedAddressId === address.id ? styles.addressCardActive : ""}`}
+                                    onClick={() => setSelectedAddressId(address.id)}
+                                >
+                                    <input
+                                        type="radio"
+                                        name="modalAddress"
+                                        className={styles.radioInput}
+                                        checked={selectedAddressId === address.id}
+                                        onChange={() => setSelectedAddressId(address.id)}
+                                    />
+                                    <div className={styles.addressDetails}>
+                                        <strong className={styles.fullName}>{address.fullName}</strong>
+                                        <span>
+                                            {address.houseNo}, {address.street}
+                                        </span>
+                                        <span>
+                                            {address.city}, {address.state} - {address.pincode}
+                                        </span>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
 
-            <button
-                onClick={() =>
-                    onPlaceOrder(productId, selectedAddressId, quantity)
-                }
-            >
-                Place Order
-            </button>
+                        <div className={styles.qtySection}>
+                            <span className={styles.qtyLabel}>Quantity</span>
+                            <input
+                                type="number"
+                                min="1"
+                                className={styles.qtyInput}
+                                value={quantity}
+                                onChange={(e) => setQuantity(Math.max(1, Number(e.target.value)))}
+                            />
+                        </div>
+                    </>
+                )}
 
-            <button onClick={onClose}>
-                Cancel
-            </button>
-
+                <div className={styles.actions}>
+                    <button className={styles.cancelBtn} onClick={onClose}>
+                        Cancel
+                    </button>
+                    <button
+                        className={styles.submitBtn}
+                        onClick={() => onPlaceOrder(productId, selectedAddressId, quantity)}
+                        disabled={!selectedAddressId}
+                    >
+                        Confirm Order
+                    </button>
+                </div>
+            </div>
         </div>
     );
 }

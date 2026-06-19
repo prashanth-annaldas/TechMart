@@ -1,7 +1,9 @@
 import { useState } from "react";
 import api from "../services/api";
+import { useToast } from "../context/ToastContext";
 
 function AdminCategory() {
+    const { showToast } = useToast();
 
     const [category, setCategory] = useState({
         name: "",
@@ -26,7 +28,7 @@ function AdminCategory() {
                 category
             );
 
-            alert(res.data);
+            showToast(res.data || "Category Created Successfully!", "success");
 
             setCategory({
                 name: "",
@@ -36,7 +38,7 @@ function AdminCategory() {
         }
         catch(error){
             console.log(error);
-            alert("Category Creation Failed");
+            showToast("Category Creation Failed", "error");
         }
     };
 

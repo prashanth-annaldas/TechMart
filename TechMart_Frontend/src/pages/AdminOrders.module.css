@@ -1,0 +1,145 @@
+.adminPage {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-primary);
+}
+
+.content {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: var(--space-xl) var(--container-padding) var(--space-3xl);
+  width: 100%;
+  flex: 1;
+}
+
+.pageTitle {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: var(--space-xl);
+}
+
+.ordersList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.orderCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  display: flex;
+  gap: var(--space-lg);
+  transition: border-color var(--transition-fast);
+}
+
+.orderCard:hover {
+  border-color: var(--accent);
+}
+
+.orderImage {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.orderInfo {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: var(--space-md);
+  align-items: center;
+}
+
+.orderMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.productName {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.orderId {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.orderPriceQty {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.totalPrice {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.qtyText {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.orderStatusActions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-xs);
+}
+
+.statusLabel {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.statusSelect {
+  padding: 6px 28px 6px 12px !important;
+  font-size: 0.825rem !important;
+  font-weight: 600 !important;
+  border-radius: var(--radius-md) !important;
+  cursor: pointer;
+  background-color: var(--bg-secondary) !important;
+  width: auto !important;
+}
+
+.locationText {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.emptyText {
+  text-align: center;
+  padding: var(--space-3xl) 0;
+  color: var(--text-muted);
+}
+
+@media (max-width: 768px) {
+  .orderCard {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .orderInfo {
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+  }
+
+  .orderStatusActions {
+    align-items: center;
+  }
+}

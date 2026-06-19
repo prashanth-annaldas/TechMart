@@ -1,0 +1,140 @@
+/* ============================================
+   TechMart — Design System Variables
+   Light (default) & Dark themes
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+:root {
+  /* ── Typography ───────────────────────────── */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* ── Spacing ──────────────────────────────── */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+
+  /* ── Border Radius ────────────────────────── */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+
+  /* ── Transitions ──────────────────────────── */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.25s ease;
+  --transition-slow: 0.4s ease;
+
+  /* ── Z-Index ──────────────────────────────── */
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-modal-backdrop: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+
+  /* ── Container ────────────────────────────── */
+  --container-max: 1280px;
+  --container-padding: 24px;
+
+  /* ═══ LIGHT THEME (Default) ════════════════ */
+  --bg-primary: #f8fafc;
+  --bg-secondary: #f1f5f9;
+  --bg-card: #ffffff;
+  --bg-elevated: #ffffff;
+  --bg-input: #f8fafc;
+  --bg-navbar: rgba(255, 255, 255, 0.85);
+
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --text-inverse: #f8fafc;
+
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --accent-light: rgba(37, 99, 235, 0.08);
+  --accent-glow: rgba(37, 99, 235, 0.12);
+
+  --border: #e2e8f0;
+  --border-light: #f1f5f9;
+  --border-focus: #2563eb;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.08);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.1);
+  --shadow-card-hover: 0 12px 36px rgba(0, 0, 0, 0.1);
+
+  --success: #16a34a;
+  --success-bg: #f0fdf4;
+  --warning: #d97706;
+  --warning-bg: #fffbeb;
+  --error: #dc2626;
+  --error-bg: #fef2f2;
+  --info: #2563eb;
+  --info-bg: #eff6ff;
+
+  /* Hero Section */
+  --hero-bg: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  --hero-text: #f8fafc;
+  --hero-accent: #60a5fa;
+  --hero-card-bg: rgba(30, 41, 59, 0.8);
+  --hero-card-border: rgba(148, 163, 184, 0.2);
+
+  /* Footer */
+  --footer-bg: #0f172a;
+  --footer-text: #cbd5e1;
+  --footer-heading: #f8fafc;
+  --footer-border: #1e293b;
+  --footer-link: #94a3b8;
+  --footer-link-hover: #60a5fa;
+
+  /* Promo Banner */
+  --promo-bg: #1e293b;
+  --promo-text: #f1f5f9;
+}
+
+/* ═══ DARK THEME ═════════════════════════════ */
+[data-theme="dark"] {
+  --bg-primary: #0a0a12;
+  --bg-secondary: #101020;
+  --bg-card: #161628;
+  --bg-elevated: #1c1c36;
+  --bg-input: #161628;
+  --bg-navbar: rgba(10, 10, 18, 0.88);
+
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --text-inverse: #0f172a;
+
+  --accent: #3b82f6;
+  --accent-hover: #60a5fa;
+  --accent-light: rgba(59, 130, 246, 0.1);
+  --accent-glow: rgba(59, 130, 246, 0.15);
+
+  --border: #1e293b;
+  --border-light: #1a1a30;
+  --border-focus: #3b82f6;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.6);
+  --shadow-card-hover: 0 12px 36px rgba(59, 130, 246, 0.08);
+
+  --success-bg: rgba(22, 163, 74, 0.12);
+  --warning-bg: rgba(217, 119, 6, 0.12);
+  --error-bg: rgba(220, 38, 38, 0.12);
+  --info-bg: rgba(37, 99, 235, 0.12);
+
+  --hero-bg: linear-gradient(135deg, #0a0a12 0%, #12121e 50%, #0f172a 100%);
+  --hero-card-bg: rgba(22, 22, 40, 0.9);
+  --hero-card-border: rgba(59, 130, 246, 0.2);
+
+  --promo-bg: #161628;
+}

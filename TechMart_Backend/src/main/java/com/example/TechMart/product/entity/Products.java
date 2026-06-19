@@ -3,10 +3,12 @@ package com.example.TechMart.product.entity;
 import com.example.TechMart.cart.entity.CartItem;
 import com.example.TechMart.category.entity.Category;
 import com.example.TechMart.order.entity.OrderItem;
+import com.example.TechMart.reviews.entity.Reviews;
 import com.example.TechMart.wishlist.entity.WishlistItem;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -31,13 +33,16 @@ public class Products {
     @Column(nullable = false)
     private String description;
 
-    public String getDescription() {
-        return description;
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    public void prePersist() {
+        createdAt = LocalDateTime.now();
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    @Column(nullable = false)
+    private Double averageRating = 0.0;
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
@@ -54,6 +59,63 @@ public class Products {
     @OneToMany(mappedBy = "product")
     @JsonIgnore
     private List<WishlistItem> wishlistItems;
+
+    @OneToMany(mappedBy = "product")
+    @JsonIgnore
+    private List<Reviews> reviews;
+
+    private Double salesScore;
+
+    @Column(nullable = false)
+    private Integer totalSold = 0;
+
+    public Integer getTotalSold() {
+        return totalSold;
+    }
+
+    public void setTotalSold(Integer totalSold) {
+        this.totalSold = totalSold;
+    }
+
+    public Double getSalesScore() {
+        return salesScore;
+    }
+
+    public void setSalesScore(Double salesScore) {
+        this.salesScore = salesScore;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Double getAverageRating() {
+        return averageRating;
+    }
+
+    public void setAverageRating(Double averageRating) {
+        this.averageRating = averageRating;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public List<Reviews> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Reviews> reviews) {
+        this.reviews = reviews;
+    }
 
     public List<WishlistItem> getWishlistItems() {
         return wishlistItems;

@@ -1,7 +1,7 @@
 package com.example.TechMart.product.controller;
 
 import com.example.TechMart.product.dto.ProductRequest;
-import com.example.TechMart.product.dto.SearchProductsRequest;
+import com.example.TechMart.product.dto.ProductResponse;
 import com.example.TechMart.product.entity.Products;
 import com.example.TechMart.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public List<Products> getAllProducts(){
+    public List<ProductResponse> getAllProducts(){
         return productService.getAllProducts();
     }
 
@@ -45,10 +45,5 @@ public class ProductController {
             @RequestBody List<ProductRequest> products) {
 
         return productService.addProducts(products);
-    }
-
-    @GetMapping("/products/search")
-    public List<Products> searchByName(@RequestParam String name){
-        return productService.searchByName(name);
     }
 }

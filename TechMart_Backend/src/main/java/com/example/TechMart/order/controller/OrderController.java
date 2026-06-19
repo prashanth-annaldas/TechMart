@@ -1,6 +1,5 @@
 package com.example.TechMart.order.controller;
 
-import com.example.TechMart.order.dto.BuyNowRequest;
 import com.example.TechMart.order.dto.OrderRequest;
 import com.example.TechMart.order.dto.OrderResponse;
 import com.example.TechMart.order.service.OrderService;
@@ -17,11 +16,6 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @PostMapping("/orders/buyNow")
-    public String buyNow(@RequestBody BuyNowRequest dto, Authentication authentication){
-        return orderService.buyNow(dto, authentication.getName());
-    }
-
     @GetMapping("/orders")
     public List<OrderResponse> getUserOrders(Authentication authentication){
         return orderService.getUserOrders(authentication.getName());
@@ -35,5 +29,11 @@ public class OrderController {
     @PutMapping("/admin/orders/{orderId}/status")
     public String updateStatus(@PathVariable Long orderId, @RequestBody OrderRequest dto){
         return orderService.updateStatus(orderId, dto.getStatus());
+    }
+
+    @PostMapping("/admin/sync-total-sold")
+    public String syncTotalSold(){
+        orderService.syncTotalSold();
+        return "DONE";
     }
 }

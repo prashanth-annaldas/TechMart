@@ -54,7 +54,10 @@ public class SecurityConfig {
 
                         .requestMatchers(
                                 "/api/wishlist/**",
-                                "/api/cart/**"
+                                "/api/cart/**",
+                                "/api/reviews/**",
+                                "/api/orders/**",
+                                "/api/payment/**"
                         ).hasAuthority("ROLE_CUSTOMER")
                         .anyRequest()
                         .authenticated()

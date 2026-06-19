@@ -3,6 +3,7 @@ package com.example.TechMart.user.entity;
 import com.example.TechMart.cart.entity.Cart;
 import com.example.TechMart.order.entity.Orders;
 import com.example.TechMart.profile.entity.Address;
+import com.example.TechMart.reviews.entity.Reviews;
 import com.example.TechMart.wishlist.entity.Wishlist;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -46,6 +47,17 @@ public class Users {
 
     @OneToOne(mappedBy = "user")
     private Wishlist wishlist;
+
+    @OneToMany(mappedBy = "user")
+    private List<Reviews> reviews;
+
+    public List<Reviews> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Reviews> reviews) {
+        this.reviews = reviews;
+    }
 
     public Wishlist getWishlist() {
         return wishlist;

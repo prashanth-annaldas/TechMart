@@ -1,5 +1,7 @@
 package com.example.TechMart.order.service;
 
+import com.example.TechMart.elasticsearch.document.ProductDocument;
+import com.example.TechMart.elasticsearch.repository.ProductSearchRepository;
 import com.example.TechMart.order.dto.BuyNowRequest;
 import com.example.TechMart.order.dto.OrderResponse;
 import com.example.TechMart.order.entity.OrderItem;
@@ -36,7 +38,10 @@ public class OrderService {
     @Autowired
     private OrderItemRepository orderItemRepo;
 
-    public String buyNow(BuyNowRequest dto, String email){
+    @Autowired
+    private ProductSearchRepository productSearchRepo;
+
+    public Orders buyNow(BuyNowRequest dto, String email){
 
         Users user = userRepo.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("USER NOT FOUND"));
@@ -52,12 +57,13 @@ public class OrderService {
         OrderItem orderItem = new OrderItem();
 
         if(product.getStock() < dto.getQuantity()){
-            return "OUT OF STOCK";
+            return null;
         }
 
         Long total_amount = Math.round(product.getPrice() * dto.getQuantity());
 
         product.setStock(product.getStock() - dto.getQuantity());
+        product.setTotalSold(product.getTotalSold() + dto.getQuantity());
         productRepo.save(product);
 
         orders.setUser(user);
@@ -74,7 +80,14 @@ public class OrderService {
 
         orderItemRepo.save(orderItem);
 
-        return "ORDER PLACED";
+        ProductDocument doc = productSearchRepo.findById(product.getId()).orElseThrow();
+
+        if(doc != null){
+            doc.setTotalSold(product.getTotalSold());
+            productSearchRepo.save(doc);
+        }
+
+        return orders;
     }
 
     public List<OrderResponse> getUserOrders(String email){
@@ -137,7 +150,7 @@ public class OrderService {
         return response;
     }
 
-    public String updateStatus(Long orderId, String status){
+    public String updateStatus(Long orderId, String status) {
         Orders order = orderRepo.findById(orderId).orElseThrow();
 
         order.setStatus(Orders.Status.valueOf(status));
@@ -145,5 +158,21 @@ public class OrderService {
         orderRepo.save(order);
 
         return "STATUS UPDATED";
+    }
+
+    public void syncTotalSold() {
+
+        List<Products> products = productRepo.findAll();
+
+        for(Products product : products){
+
+            Integer sold = orderItemRepo.totalOrders(product.getId());
+
+            product.setTotalSold(
+                    sold == null ? 0 : sold
+            );
+
+            productRepo.save(product);
+        }
     }
 }

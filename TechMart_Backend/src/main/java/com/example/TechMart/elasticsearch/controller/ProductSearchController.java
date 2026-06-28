@@ -26,8 +26,8 @@ public class ProductSearchController {
     }
 
     @GetMapping("/products/search")
-    public List<ProductDocument> searchByName(@RequestParam String name){
-        return productSearchService.searchByName(name);
+    public List<ProductDocument> elasticSearch(@RequestParam String name){
+        return productSearchService.elasticSearch(name);
     }
 
     @GetMapping("/products/suggestions")

@@ -26,6 +26,7 @@ public class ProductController {
 
     @GetMapping("/products")
     public List<ProductResponse> getAllProducts(){
+
         return productService.getAllProducts();
     }
 
@@ -45,5 +46,12 @@ public class ProductController {
             @RequestBody List<ProductRequest> products) {
 
         return productService.addProducts(products);
+    }
+
+    @GetMapping("/products/{id}")
+    public ProductResponse getProductById(
+            @PathVariable Long id
+    ){
+        return productService.getProductById(id);
     }
 }

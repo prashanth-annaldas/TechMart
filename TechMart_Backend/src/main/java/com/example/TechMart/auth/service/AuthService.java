@@ -43,9 +43,6 @@ public class AuthService {
     public AuthResponse login(LoginRequest dto, HttpServletResponse res){
         Users user = userRepo.findByEmail(dto.getEmail()).orElseThrow();
 
-        System.out.println("EMAIL = " + dto.getEmail());
-        System.out.println("PASSWORD = " + dto.getPassword());
-
         if(user == null){
             return new AuthResponse("USER NOT EXISTED", null);
         }

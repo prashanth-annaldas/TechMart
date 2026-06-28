@@ -2,6 +2,7 @@ package com.example.TechMart.order.service;
 
 import com.example.TechMart.elasticsearch.document.ProductDocument;
 import com.example.TechMart.elasticsearch.repository.ProductSearchRepository;
+import com.example.TechMart.elasticsearch.service.ProductSearchService;
 import com.example.TechMart.order.dto.BuyNowRequest;
 import com.example.TechMart.order.dto.OrderResponse;
 import com.example.TechMart.order.entity.OrderItem;
@@ -17,6 +18,8 @@ import com.example.TechMart.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +43,9 @@ public class OrderService {
 
     @Autowired
     private ProductSearchRepository productSearchRepo;
+
+    @Autowired
+    private ProductSearchService productSearchService;
 
     public Orders buyNow(BuyNowRequest dto, String email){
 
@@ -80,12 +86,9 @@ public class OrderService {
 
         orderItemRepo.save(orderItem);
 
-        ProductDocument doc = productSearchRepo.findById(product.getId()).orElseThrow();
-
-        if(doc != null){
-            doc.setTotalSold(product.getTotalSold());
-            productSearchRepo.save(doc);
-        }
+        productSearchService.updateProductDocument(
+                product.getId()
+        );
 
         return orders;
     }
@@ -152,6 +155,18 @@ public class OrderService {
 
     public String updateStatus(Long orderId, String status) {
         Orders order = orderRepo.findById(orderId).orElseThrow();
+
+        if(Orders.Status.valueOf(status) == Orders.Status.CANCELLED && order.getStatus() != Orders.Status.CANCELLED){
+            for(OrderItem orderItem : order.getOrderItems()){
+                Products product = orderItem.getProduct();
+                product.setStock(product.getStock() + orderItem.getQuantity());
+                productRepo.save(product);
+
+                productSearchService.updateProductDocument(
+                        product.getId()
+                );
+            }
+        }
 
         order.setStatus(Orders.Status.valueOf(status));
 

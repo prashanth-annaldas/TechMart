@@ -5,7 +5,6 @@ import com.example.TechMart.auth.dto.CurrentUserResponse;
 import com.example.TechMart.auth.dto.LoginRequest;
 import com.example.TechMart.auth.dto.RegisterRequest;
 import com.example.TechMart.auth.service.AuthService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

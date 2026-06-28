@@ -53,6 +53,9 @@ public class PaymentService {
     @Autowired
     private PaymentRepository paymentRepo;
 
+    @Autowired
+    private EmailService emailService;
+
     public RazorpayOrderResponse createOrder(BuyNowRequest dto, String email){
         try {
             Users user = userRepo.findByEmail(email).orElseThrow();
@@ -95,6 +98,8 @@ public class PaymentService {
 
     public Orders verifyPayment(VerifyPaymentRequest dto, String email) throws Exception{
         try{
+
+            Users user = userRepo.findByEmail(email).orElseThrow();
             String payload = dto.getRazorpayOrderId() + "|" + dto.getRazorpayPaymentId();
             boolean isValid = Utils.verifySignature(
                     payload,
@@ -123,6 +128,18 @@ public class PaymentService {
                     buyNowRequest,
                     email
             );
+
+            Products product = productRepo.findById(dto.getProductId()).orElseThrow();
+
+            emailService.sendOrderConfirmation(
+                    user.getName(),
+                    user.getEmail(),
+                    orders.getId(),
+                    product.getName(),
+                    dto.getQuantity(),
+                    product.getPrice() * dto.getQuantity()
+            );
+
             payment.setRazorpayPaymentId(
                     dto.getRazorpayPaymentId()
             );

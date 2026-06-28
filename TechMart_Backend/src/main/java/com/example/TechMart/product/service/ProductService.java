@@ -3,8 +3,8 @@ package com.example.TechMart.product.service;
 import com.example.TechMart.cart.repository.CartItemRepository;
 import com.example.TechMart.category.entity.Category;
 import com.example.TechMart.category.repository.CategoryRepository;
-import com.example.TechMart.elasticsearch.document.ProductDocument;
 import com.example.TechMart.elasticsearch.repository.ProductSearchRepository;
+import com.example.TechMart.elasticsearch.service.ProductSearchService;
 import com.example.TechMart.order.repository.OrderItemRepository;
 import com.example.TechMart.product.dto.ProductRequest;
 import com.example.TechMart.product.dto.ProductResponse;
@@ -14,6 +14,9 @@ import com.example.TechMart.reviews.repository.ReviewsRepository;
 import com.example.TechMart.user.repository.UserRepository;
 import com.example.TechMart.wishlist.repository.WishlistItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,6 +54,14 @@ public class ProductService {
     @Autowired
     private ProductSearchRepository productSearchRepo;
 
+    @Autowired
+    private ProductSearchService productSearchService;
+
+    @Caching(evict = {
+            @CacheEvict(value = "products", allEntries = true),
+            @CacheEvict(value = "search", allEntries = true),
+            @CacheEvict(value = "suggestions", allEntries = true)
+    })
     public Products createProduct(ProductRequest dto) {
 
         String cloudinaryUrl =
@@ -73,10 +84,17 @@ public class ProductService {
         product.setImageUrl(cloudinaryUrl);
         product.setCreatedAt(LocalDateTime.now());
 
-        return productRepo.save(product);
+        Products saved = productRepo.save(product);
+
+        productSearchService.updateProductDocument(saved.getId());
+
+        return saved;
     }
 
+    @Cacheable(value = "products")
     public List<ProductResponse> getAllProducts(){
+
+        System.out.println("ACTUALLY HITTING DATABASE");
 
         List<Products> products = productRepo.findAll();
 
@@ -111,16 +129,12 @@ public class ProductService {
         return response;
     }
 
-    public Products getProductById(Long id) {
-        return productRepo.findById(id)
-                .orElseThrow(() ->
-                        new RuntimeException("Product not found"));
-    }
-
-    public void deleteProduct(Long id) {
-        productRepo.deleteById(id);
-    }
-
+    @Caching(evict = {
+            @CacheEvict(value = "products", allEntries = true),
+            @CacheEvict(value = "productDetails", key = "#productId"),
+            @CacheEvict(value = "search", allEntries = true),
+            @CacheEvict(value = "suggestions", allEntries = true)
+    })
     public String editProduct(Long productId, ProductRequest dto){
 
         String cloudinaryUrl =
@@ -147,17 +161,19 @@ public class ProductService {
 
         productRepo.save(product);
 
-        ProductDocument doc = productSearchRepo.findById(product.getId()).orElseThrow();
-
-        if(doc != null){
-            doc.setStock(dto.getStock());
-            productSearchRepo.save(doc);
-        }
+        productSearchService.updateProductDocument(
+            product.getId()
+        );
 
         return "PRODUCT EDITED";
     }
 
-    @Transactional
+    @Caching(evict = {
+            @CacheEvict(value = "products", allEntries = true),
+            @CacheEvict(value = "productDetails", key = "#productId"),
+            @CacheEvict(value = "search", allEntries = true),
+            @CacheEvict(value = "suggestions", allEntries = true)
+    })
     public String removeProduct(Long productId){
         Products product = productRepo.findById(productId).orElseThrow();
 
@@ -170,6 +186,12 @@ public class ProductService {
     }
 
     @Transactional
+    @Caching(evict = {
+            @CacheEvict(value = "products", allEntries = true),
+            @CacheEvict(value = "productDetails", allEntries = true),
+            @CacheEvict(value = "search", allEntries = true),
+            @CacheEvict(value = "suggestions", allEntries = true)
+    })
     public List<Products> addProducts(List<ProductRequest> requests) {
 
         List<Products> products = new ArrayList<>();
@@ -197,6 +219,46 @@ public class ProductService {
             products.add(product);
         }
 
-        return productRepo.saveAll(products);
+        List<Products> savedProducts =
+                productRepo.saveAll(products);
+
+        for(Products product : savedProducts){
+            productSearchService.updateProductDocument(
+                    product.getId()
+            );
+        }
+
+        return savedProducts;
+    }
+
+    @Cacheable(
+            value = "productDetails",
+            key = "#id"
+    )
+    public ProductResponse getProductById(Long id){
+        Products product = productRepo.findById(id)
+                .orElseThrow();
+
+        System.out.println("ACTUALLY HITTING DATABASE");
+
+        ProductResponse dto = new ProductResponse();
+
+        dto.setId(product.getId());
+        dto.setName(product.getName());
+        dto.setPrice(product.getPrice());
+        dto.setImageUrl(product.getImageUrl());
+        dto.setDescription(product.getDescription());
+        dto.setStock(product.getStock());
+
+        dto.setCategoryId(product.getCategory().getId());
+        dto.setCategoryName(product.getCategory().getName());
+
+        Double avg = reviewsRepo.getAverageRating(product.getId());
+        Long reviewCount = reviewsRepo.countByProductId(product.getId());
+
+        dto.setAverageRating(avg == null ? 0.0 : avg);
+        dto.setReviewCount(reviewCount);
+
+        return dto;
     }
 }

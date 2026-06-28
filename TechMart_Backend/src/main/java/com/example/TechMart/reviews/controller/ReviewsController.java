@@ -3,7 +3,6 @@ package com.example.TechMart.reviews.controller;
 import com.example.TechMart.product.repository.ProductRepository;
 import com.example.TechMart.reviews.dto.ReviewsRequest;
 import com.example.TechMart.reviews.dto.ReviewsResponse;
-import com.example.TechMart.reviews.entity.Reviews;
 import com.example.TechMart.reviews.repository.ReviewsRepository;
 import com.example.TechMart.reviews.service.ReviewsService;
 import com.example.TechMart.user.repository.UserRepository;

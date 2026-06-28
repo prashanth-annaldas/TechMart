@@ -1,13 +1,11 @@
 package com.example.TechMart.reviews.entity;
 
-import com.example.TechMart.cart.entity.CartItem;
 import com.example.TechMart.product.entity.Products;
 import com.example.TechMart.user.entity.Users;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Table(name = "reviews")

@@ -31,7 +31,7 @@ public interface ProductSearchRepository extends ElasticsearchRepository<Product
       }
     }
     """)
-    List<ProductDocument> fuzzySearch(String name);
+    List<ProductDocument> elasticSearch(String name);
 
     List<ProductDocument> findByNameStartingWithIgnoreCase(String name);
 }

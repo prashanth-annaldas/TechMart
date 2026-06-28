@@ -57,7 +57,8 @@ public class SecurityConfig {
                                 "/api/cart/**",
                                 "/api/reviews/**",
                                 "/api/orders/**",
-                                "/api/payment/**"
+                                "/api/payment/**",
+                                "/api/ai/**"
                         ).hasAuthority("ROLE_CUSTOMER")
                         .anyRequest()
                         .authenticated()

@@ -91,7 +91,7 @@ const Home = () => {
         try {
             const res = await api.get("/api/products");
 
-            setProducts(sortedProducts);
+            setProducts(res.data);
         }
         catch (error) {
             console.log(error);

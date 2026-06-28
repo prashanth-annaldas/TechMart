@@ -76,17 +76,6 @@ function AddressSelector({ productId, onClose, onPlaceOrder }) {
                                 </div>
                             ))}
                         </div>
-
-                        <div className={styles.qtySection}>
-                            <span className={styles.qtyLabel}>Quantity</span>
-                            <input
-                                type="number"
-                                min="1"
-                                className={styles.qtyInput}
-                                value={quantity}
-                                onChange={(e) => setQuantity(Math.max(1, Number(e.target.value)))}
-                            />
-                        </div>
                     </>
                 )}
 

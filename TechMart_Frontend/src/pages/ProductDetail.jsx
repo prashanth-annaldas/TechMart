@@ -42,6 +42,8 @@ function ProductDetail() {
                 productId
             })
 
+            console.log(res.data);
+
             alert("Review added successfully");
 
             setRating(5);
@@ -88,20 +90,20 @@ function ProductDetail() {
     const fetchProduct = async () => {
         setLoading(true);
         setErrorMsg("");
+
         try {
-            // Fetch all products and find the matching one
-            const res = await api.get("/api/products");
-            const targetId = Number(id);
-            const foundProduct = res.data.find(p => p.id === targetId);
-            
-            if (foundProduct) {
-                setProduct(foundProduct);
-            } else {
-                setErrorMsg("Product not found");
-            }
+            const res = await api.get(`/api/products/${id}`);
+
+            setProduct(res.data);
+
         } catch (error) {
-            console.error("Error fetching products:", error);
-            setErrorMsg("Failed to load product details");
+            console.error("Error fetching product:", error);
+
+            if (error.response?.status === 404) {
+                setErrorMsg("Product not found");
+            } else {
+                setErrorMsg("Failed to load product details");
+            }
         } finally {
             setLoading(false);
         }
@@ -190,6 +192,11 @@ function ProductDetail() {
                 productId,
                 quantity: qty
             });
+
+            if (!window.Razorpay) {
+                showToast("Razorpay SDK not loaded", "error");
+                return;
+            }
 
             const options = {
                 key: "rzp_test_T1oFmHoHcfM7ww",

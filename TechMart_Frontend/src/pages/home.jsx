@@ -1,18 +1,58 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Navbar from "../components/navbar";
 import api from "../services/api";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import AddressSelector from "../components/addressSelector";
 import Footer from "../components/Footer";
 import ProductCard from "../components/ProductCard";
 import { useToast } from "../context/ToastContext";
 import styles from "./Home.module.css";
 import ScrollButtons from "../components/ScrollButtons";
+import { 
+    MdLaptopMac, 
+    MdPhoneIphone, 
+    MdHeadphones, 
+    MdWatch, 
+    MdTv, 
+    MdPhotoCamera, 
+    MdGamepad, 
+    MdTablet, 
+    MdShoppingBag,
+    MdOutlineCheckroom,
+    MdOutlineLight,
+    MdChair,
+    MdOutlineBook,
+    MdOutlineBrush,
+    MdSportsSoccer,
+    MdAutoAwesome,
+    MdGridOn
+} from "react-icons/md";
+import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
+import { FiTruck, FiChevronDown } from "react-icons/fi";
+
+const getFlipkartCategoryIcon = (name) => {
+    const key = name.toLowerCase();
+    if (key.includes("laptop")) return <MdLaptopMac />;
+    if (key.includes("phone") || key.includes("mobile")) return <MdPhoneIphone />;
+    if (key.includes("audio") || key.includes("headphone")) return <MdHeadphones />;
+    if (key.includes("wearable") || key.includes("watch")) return <MdWatch />;
+    if (key.includes("tv") || key.includes("appliance")) return <MdTv />;
+    if (key.includes("camera")) return <MdPhotoCamera />;
+    if (key.includes("accessory") || key.includes("game")) return <MdGamepad />;
+    if (key.includes("tablet")) return <MdTablet />;
+    if (key.includes("fashion") || key.includes("clothing")) return <MdOutlineCheckroom />;
+    if (key.includes("home")) return <MdOutlineLight />;
+    if (key.includes("furniture") || key.includes("chair")) return <MdChair />;
+    if (key.includes("book")) return <MdOutlineBook />;
+    if (key.includes("beauty") || key.includes("cosmetic")) return <MdOutlineBrush />;
+    if (key.includes("sport")) return <MdSportsSoccer />;
+    return <MdShoppingBag />;
+};
 
 const categoryIcons = {
-    laptops: "💻", phones: "📱", audio: "🎧",
-    wearables: "⌚", tvs: "📺", cameras: "📷",
-    accessories: "🎮", tablets: "📱", default: "🛍️"
+    laptops: <MdLaptopMac />, phones: <MdPhoneIphone />, audio: <MdHeadphones />,
+    wearables: <MdWatch />, tvs: <MdTv />, cameras: <MdPhotoCamera />,
+    accessories: <MdGamepad />, tablets: <MdTablet />, default: <MdShoppingBag />
 };
 
 const heroSlides = [
@@ -52,10 +92,14 @@ const Home = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
     const navigate = useNavigate();
+    const location = useLocation();
     const { showToast } = useToast();
 
     // Hero slider
     const [currentSlide, setCurrentSlide] = useState(0);
+    const [showLeftArrow, setShowLeftArrow] = useState(false);
+    const [showRightArrow, setShowRightArrow] = useState(false);
+    const catRowRef = useRef(null);
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -63,6 +107,40 @@ const Home = () => {
         }, 4000);
         return () => clearInterval(timer);
     }, []);
+
+    // Check scroll to show/hide arrows
+    const handleScroll = () => {
+        if (catRowRef.current) {
+            const { scrollLeft, scrollWidth, clientWidth } = catRowRef.current;
+            setShowLeftArrow(scrollLeft > 10);
+            setShowRightArrow(scrollLeft + clientWidth < scrollWidth - 10);
+        }
+    };
+
+    // Trigger handleScroll once categories are loaded
+    useEffect(() => {
+        if (categories.length > 0) {
+            setTimeout(handleScroll, 100);
+        }
+    }, [categories]);
+
+    // Handle window resize to recheck arrows
+    useEffect(() => {
+        window.addEventListener("resize", handleScroll);
+        return () => window.removeEventListener("resize", handleScroll);
+    }, []);
+
+    const slideLeft = () => {
+        if (catRowRef.current) {
+            catRowRef.current.scrollBy({ left: -260, behavior: "smooth" });
+        }
+    };
+
+    const slideRight = () => {
+        if (catRowRef.current) {
+            catRowRef.current.scrollBy({ left: 260, behavior: "smooth" });
+        }
+    };
 
     const goToSlide = (index) => setCurrentSlide(index);
     const prevSlide = () => setCurrentSlide(prev => (prev - 1 + heroSlides.length) % heroSlides.length);
@@ -227,17 +305,69 @@ const Home = () => {
     }
 
     const isSearching = searchVal.trim() !== "";
+    
+    // Flipkart visible limits: 8 visible including "For You" and "More"
+    // Since we show "For You" first, we can show up to 8 visible categories from DB.
+    const visibleCategories = categories.slice(0, 8);
+    const remainingCategories = categories.slice(8);
 
     return (
         <div className={styles.homePage}>
             <Navbar searchVal={searchVal} setSearchVal={setSearchVal} loadSuggestions={loadSuggestions} suggestions={suggestions} setSuggestions={setSuggestions} />
+
+            {/* Flipkart Category Bar */}
+            {!isSearching && (
+                <div className={styles.flipkartCatBar}>
+                    <div className={styles.flipkartCatInnerWrapper}>
+                        {showLeftArrow && (
+                            <button 
+                                className={`${styles.catSliderBtn} ${styles.catSliderBtnLeft}`}
+                                onClick={slideLeft}
+                                aria-label="Slide categories left"
+                            >
+                                <HiChevronLeft />
+                            </button>
+                        )}
+
+                        <div 
+                            ref={catRowRef}
+                            className={styles.flipkartCatInner}
+                            onScroll={handleScroll}
+                        >
+
+                            {categories.map(category => (
+                                <Link
+                                    key={category.id}
+                                    to={`/products?category=${category.id}`}
+                                    className={styles.flipkartCatCard}
+                                >
+                                    <div className={styles.flipkartCatIconWrap}>
+                                        {getFlipkartCategoryIcon(category.name)}
+                                    </div>
+                                    <span className={styles.flipkartCatName}>{category.name}</span>
+                                </Link>
+                            ))}
+                        </div>
+
+                        {showRightArrow && (
+                            <button 
+                                className={`${styles.catSliderBtn} ${styles.catSliderBtnRight}`}
+                                onClick={slideRight}
+                                aria-label="Slide categories right"
+                            >
+                                <HiChevronRight />
+                            </button>
+                        )}
+                    </div>
+                </div>
+            )}
 
             {/* Hero Section */}
             {!isSearching && (
                 <section className={styles.hero}>
                     <div className={styles.heroSlider}>
                         <button className={styles.sliderArrow + ' ' + styles.sliderArrowLeft} onClick={prevSlide} aria-label="Previous slide">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                            <HiChevronLeft size={22} />
                         </button>
                         <div className={styles.sliderTrack} style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
                             {heroSlides.map((slide, index) => (
@@ -247,7 +377,7 @@ const Home = () => {
                             ))}
                         </div>
                         <button className={styles.sliderArrow + ' ' + styles.sliderArrowRight} onClick={nextSlide} aria-label="Next slide">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            <HiChevronRight size={22} />
                         </button>
                         <div className={styles.sliderDots}>
                             {heroSlides.map((_, index) => (
@@ -259,27 +389,6 @@ const Home = () => {
                                 />
                             ))}
                         </div>
-                    </div>
-                </section>
-            )}
-
-            {/* Categories Section */}
-            {!isSearching && (
-                <section className={styles.section}>
-                    <h2 className={styles.sectionTitle}>Shop by category</h2>
-                    <div className={styles.categoryGrid}>
-                        {categories.map(category => (
-                            <Link
-                                key={category.id}
-                                to={`/products?category=${category.id}`}
-                                className={styles.categoryCard}
-                            >
-                                <span className={styles.categoryIcon}>
-                                    {getCategoryIcon(category.name)}
-                                </span>
-                                <span className={styles.categoryName}>{category.name}</span>
-                            </Link>
-                        ))}
                     </div>
                 </section>
             )}
@@ -314,7 +423,10 @@ const Home = () => {
             <section className={styles.promoBanner}>
                 <div className={styles.promoInner}>
                     <div className={styles.promoText}>
-                        <h3>🚚 Free delivery on orders above ₹999</h3>
+                        <h3>
+                            <FiTruck size={20} style={{ marginRight: "8px", verticalAlign: "middle" }} /> 
+                            Free delivery on orders above ₹999
+                        </h3>
                         <p>Pan-India shipping · 7-day returns · 1-year warranty</p>
                     </div>
                 </div>

@@ -8,6 +8,7 @@ import AddressSelector from "../components/addressSelector";
 import { useToast } from "../context/ToastContext";
 import styles from "./Wishlist.module.css";
 import ScrollButtons from "../components/ScrollButtons";
+import { FiHeart } from "react-icons/fi";
 
 function Wishlist() {
     const navigate = useNavigate();
@@ -122,14 +123,14 @@ function Wishlist() {
             <main className={styles.content}>
                 <div className={styles.pageHeader}>
                     <h1 className={styles.pageTitle}>
-                        <span>❤️</span> My Wishlist
+                        <FiHeart size={24} style={{ marginRight: "10px", color: "#ef4444", verticalAlign: "middle" }} /> My Wishlist
                     </h1>
                     <p className={styles.pageSubtitle}>Keep track of products you love and want to purchase later</p>
                 </div>
 
                 {wishlist.length === 0 ? (
                     <div className={styles.emptyState}>
-                        <span className={styles.emptyIcon}>💝</span>
+                        <FiHeart size={64} className={styles.emptyIcon} style={{ color: "#ef4444", marginBottom: "16px" }} />
                         <h2 className={styles.emptyTitle}>Your wishlist is empty</h2>
                         <p className={styles.emptyDesc}>Save items that you like to view or purchase them later.</p>
                         <Link to="/" className={styles.emptyLink}>Explore Products</Link>

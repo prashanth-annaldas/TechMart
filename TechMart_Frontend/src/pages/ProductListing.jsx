@@ -8,6 +8,7 @@ import AddressSelector from "../components/addressSelector";
 import ScrollButtons from "../components/ScrollButtons";
 import { useToast } from "../context/ToastContext";
 import styles from "./ProductListing.module.css";
+import { FiSearch, FiFilter, FiX } from "react-icons/fi";
 
 function ProductListing() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -279,11 +280,7 @@ function ProductListing() {
                         onClick={() => setSidebarOpen(prev => !prev)}
                         aria-label={sidebarOpen ? 'Close filters' : 'Open filters'}
                     >
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <line x1="4" y1="6" x2="20" y2="6"></line>
-                            <line x1="4" y1="12" x2="16" y2="12"></line>
-                            <line x1="4" y1="18" x2="12" y2="18"></line>
-                        </svg>
+                        <FiFilter size={18} style={{ marginRight: "6px" }} />
                         {sidebarOpen ? 'Hide Filters' : 'Show Filters'}
                     </button>
 
@@ -398,20 +395,26 @@ function ProductListing() {
                                     return cat ? (
                                         <span key={catId} className={styles.chip}>
                                             {cat.name}
-                                            <button className={styles.clearChipBtn} onClick={() => handleCategoryChange(catId)}>✕</button>
+                                            <button className={styles.clearChipBtn} onClick={() => handleCategoryChange(catId)}>
+                                                <FiX size={14} />
+                                            </button>
                                         </span>
                                     ) : null;
                                 })}
                                 {selectedBrands.map(brand => (
                                     <span key={brand} className={styles.chip}>
                                         {brand}
-                                        <button className={styles.clearChipBtn} onClick={() => handleBrandChange(brand)}>✕</button>
+                                        <button className={styles.clearChipBtn} onClick={() => handleBrandChange(brand)}>
+                                            <FiX size={14} />
+                                        </button>
                                     </span>
                                 ))}
                                 {(minPrice !== "" || maxPrice !== "") && (
                                     <span className={styles.chip}>
                                         ₹{minPrice || "0"} - ₹{maxPrice || "∞"}
-                                        <button className={styles.clearChipBtn} onClick={() => { setMinPrice(""); setMaxPrice(""); }}>✕</button>
+                                        <button className={styles.clearChipBtn} onClick={() => { setMinPrice(""); setMaxPrice(""); }}>
+                                            <FiX size={14} />
+                                        </button>
                                     </span>
                                 )}
                             </div>
@@ -420,7 +423,7 @@ function ProductListing() {
                         {/* Product Grid */}
                         {filteredProducts.length === 0 ? (
                             <div className={styles.emptyState}>
-                                <span className={styles.emptyIcon}>🔍</span>
+                                <FiSearch size={64} className={styles.emptyIcon} style={{ marginBottom: "16px" }} />
                                 <h3 className={styles.emptyTitle}>No products match your filters</h3>
                                 <p className={styles.emptyDesc}>Try adjusting your checkboxes, search terms, or price ranges.</p>
                                 <button className={styles.emptyBtn} onClick={clearAllFilters}>Reset Filters</button>

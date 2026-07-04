@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import styles from "./ScrollButtons.module.css";
+import { HiChevronUp, HiChevronDown } from "react-icons/hi2";
 
 function ScrollButtons() {
     const [showScrollTop, setShowScrollTop] = useState(false);
@@ -37,9 +38,7 @@ function ScrollButtons() {
                 aria-label="Scroll to top"
                 title="Scroll to top"
             >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="18 15 12 9 6 15"></polyline>
-                </svg>
+                <HiChevronUp size={20} />
             </button>
             <button
                 className={`${styles.scrollBtn} ${showScrollBottom ? styles.scrollBtnVisible : ''}`}
@@ -47,9 +46,7 @@ function ScrollButtons() {
                 aria-label="Scroll to bottom"
                 title="Scroll to bottom"
             >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="6 9 12 15 18 9"></polyline>
-                </svg>
+                <HiChevronDown size={20} />
             </button>
         </div>
     );

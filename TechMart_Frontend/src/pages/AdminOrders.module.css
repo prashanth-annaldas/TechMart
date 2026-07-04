@@ -75,6 +75,11 @@
   color: var(--text-muted);
 }
 
+.customerEmail {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
 .orderPriceQty {
   display: flex;
   flex-direction: column;

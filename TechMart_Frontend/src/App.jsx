@@ -17,6 +17,7 @@ import AdminProducts from './pages/adminProducts';
 import AdminCategories from './pages/adminCategories';
 import AdminOrders from './pages/adminOrders';
 import Payment from "./pages/payment";
+import Ai from "./pages/ai";
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
             <Route path="/admin/orders" element={<AdminOrders />} />
 
             <Route path="/payments/history" element={<Payment />} />
+            <Route path="/ai" element={<Ai />} />
           </Routes>
         </BrowserRouter>
       </ToastProvider>

@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./ProductCard.module.css";
+import { FiHeart, FiPlus } from "react-icons/fi";
 
 function ProductCard({ product, onAddToCart, onAddToWishlist, isWishlisted, showActions = true }) {
     const navigate = useNavigate();
@@ -12,8 +13,8 @@ function ProductCard({ product, onAddToCart, onAddToWishlist, isWishlisted, show
 
     return (
         <div className={styles.card} onClick={handleCardClick} style={{ cursor: "pointer" }}>
-            <div className={styles.imageArea}>
-                <img
+             <div className={styles.imageArea}>
+                 <img
                     src={product.imageUrl || "/placeholder.png"}
                     alt={product.name}
                     className={styles.image}
@@ -28,19 +29,11 @@ function ProductCard({ product, onAddToCart, onAddToWishlist, isWishlisted, show
                         }}
                         title={isWishlisted ? "Remove from Wishlist" : "Add to Wishlist"}
                     >
-                        <svg
-                            width="18"
-                            height="18"
-                            viewBox="0 0 24 24"
+                        <FiHeart
+                            size={18}
                             fill={isWishlisted ? "currentColor" : "none"}
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
                             style={{ display: "block" }}
-                        >
-                            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
-                        </svg>
+                        />
                     </button>
                 )}
             </div>
@@ -69,7 +62,7 @@ function ProductCard({ product, onAddToCart, onAddToWishlist, isWishlisted, show
                                     }}
                                     title="Add to Cart"
                                 >
-                                    +
+                                    <FiPlus size={16} />
                                 </button>
                             )}
                         </div>

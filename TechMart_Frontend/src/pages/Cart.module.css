@@ -188,6 +188,10 @@
 
 /* Empty State */
 .emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   padding: 80px 24px;
   animation: fadeInUp 0.4s ease-out;
@@ -195,8 +199,10 @@
 
 .emptyIcon {
   font-size: 4rem;
-  margin-bottom: 16px;
-  display: block;
+  margin: 0 auto 16px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .emptyTitle {

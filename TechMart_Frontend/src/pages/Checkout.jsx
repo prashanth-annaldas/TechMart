@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 import { useToast } from "../context/ToastContext";
 import styles from "./Checkout.module.css";
 import ScrollButtons from "../components/ScrollButtons";
+import { FiCreditCard, FiPhone } from "react-icons/fi";
 
 function Checkout() {
     const navigate = useNavigate();
@@ -168,7 +169,7 @@ function Checkout() {
 
             <main className={styles.content}>
                 <h1 className={styles.pageTitle}>
-                    <span>💳</span> Checkout
+                    <FiCreditCard size={24} style={{ marginRight: "10px", color: "var(--accent)", verticalAlign: "middle" }} /> Checkout
                 </h1>
 
                 <div className={styles.layout}>
@@ -202,7 +203,10 @@ function Checkout() {
                                                     <span>{address.houseNo}, {address.street}</span>
                                                     {address.landmark && <span>Near {address.landmark}</span>}
                                                     <span>{address.city}, {address.state} - {address.pincode}</span>
-                                                    <span className={styles.phone}>📞 {address.phoneNumber}</span>
+                                                    <span className={styles.phone}>
+                                                        <FiPhone style={{ marginRight: "6px", verticalAlign: "middle" }} /> 
+                                                        {address.phoneNumber}
+                                                    </span>
                                                 </div>
                                             </div>
                                         ))}

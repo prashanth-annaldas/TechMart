@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../services/api";
 import styles from "./AddressSelector.module.css";
+import { HiXMark } from "react-icons/hi2";
 
 function AddressSelector({ productId, onClose, onPlaceOrder }) {
     const [addresses, setAddresses] = useState([]);
@@ -33,7 +34,7 @@ function AddressSelector({ productId, onClose, onPlaceOrder }) {
                 <div className={styles.header}>
                     <h2 className={styles.title}>Select Delivery Address</h2>
                     <button className={styles.closeBtn} onClick={onClose} aria-label="Close modal">
-                        ✕
+                        <HiXMark size={20} />
                     </button>
                 </div>
 

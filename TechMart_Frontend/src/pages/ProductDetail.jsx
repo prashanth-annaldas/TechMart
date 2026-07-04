@@ -7,6 +7,7 @@ import AddressSelector from "../components/addressSelector";
 import { useToast } from "../context/ToastContext";
 import styles from "./ProductDetail.module.css";
 import ScrollButtons from "../components/ScrollButtons";
+import { FiShoppingCart, FiHeart } from "react-icons/fi";
 
 function ProductDetail() {
     const { id } = useParams();
@@ -380,13 +381,21 @@ function ProductDetail() {
                                         onClick={handleAddToCart}
                                         disabled={!isInStock}
                                     >
-                                        🛒 Add to Cart
+                                        <FiShoppingCart size={16} style={{ marginRight: "8px" }} /> Add to Cart
                                     </button>
                                     <button
                                         className={`${styles.wishlistBtn} ${isWishlisted ? styles.wishlistActive : ""}`}
                                         onClick={handleAddToWishlist}
                                     >
-                                        {isWishlisted ? "❤️ Wishlisted" : "🤍 Wishlist"}
+                                        {isWishlisted ? (
+                                            <>
+                                                <FiHeart size={16} fill="#ef4444" style={{ marginRight: "8px", color: "#ef4444", verticalAlign: "middle" }} /> Wishlisted
+                                            </>
+                                        ) : (
+                                            <>
+                                                <FiHeart size={16} style={{ marginRight: "8px", verticalAlign: "middle" }} /> Wishlist
+                                            </>
+                                        )}
                                     </button>
                                 </div>
 

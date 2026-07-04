@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 import { useToast } from "../context/ToastContext";
 import styles from "./AdminProducts.module.css";
 import ScrollButtons from "../components/ScrollButtons";
+import { FiPlus, FiEdit2, FiTrash2 } from "react-icons/fi";
 
 const AdminProducts = () => {
     const navigate = useNavigate();
@@ -168,7 +169,7 @@ const AdminProducts = () => {
                     <h1 className={styles.pageTitle}>Product Management</h1>
                     {!showForm && (
                         <button className={styles.addBtn} onClick={openAddForm}>
-                            + Add New Product
+                            <FiPlus style={{ marginRight: "4px" }} /> Add New Product
                         </button>
                     )}
                 </div>
@@ -315,13 +316,13 @@ const AdminProducts = () => {
                                             className={styles.editCardBtn}
                                             onClick={() => handleEditProduct(product)}
                                         >
-                                            ✏️ Edit
+                                            <FiEdit2 size={14} style={{ marginRight: "6px" }} /> Edit
                                         </button>
                                         <button
                                             className={styles.deleteCardBtn}
                                             onClick={() => handleDeleteProduct(product.id)}
                                         >
-                                            🗑️ Delete
+                                            <FiTrash2 size={14} style={{ marginRight: "6px" }} /> Delete
                                         </button>
                                     </div>
                                 </div>

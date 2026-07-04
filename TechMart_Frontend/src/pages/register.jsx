@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import api from "../services/api";
 import { useToast } from "../context/ToastContext";
 import styles from "./Auth.module.css";
+import { FiZap, FiHeart, FiBox } from "react-icons/fi";
 
 function Register() {
 
@@ -56,15 +57,15 @@ function Register() {
                 </p>
                 <div className={styles.brandFeatures}>
                     <div className={styles.brandFeature}>
-                        <span className={styles.brandFeatureIcon}>⚡</span>
+                        <FiZap className={styles.brandFeatureIcon} size={18} />
                         Quick and easy checkout
                     </div>
                     <div className={styles.brandFeature}>
-                        <span className={styles.brandFeatureIcon}>❤️</span>
+                        <FiHeart className={styles.brandFeatureIcon} size={18} />
                         Save favorites to your wishlist
                     </div>
                     <div className={styles.brandFeature}>
-                        <span className={styles.brandFeatureIcon}>📦</span>
+                        <FiBox className={styles.brandFeatureIcon} size={18} />
                         Track orders in real-time
                     </div>
                 </div>

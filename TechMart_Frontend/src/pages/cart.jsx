@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { useToast } from "../context/ToastContext";
 import styles from "./Cart.module.css";
 import ScrollButtons from "../components/ScrollButtons";
+import { FiShoppingCart, FiShoppingBag, FiTrash2 } from "react-icons/fi";
 
 function Cart(){
 
@@ -84,13 +85,13 @@ function Cart(){
 
             <div className={styles.cartContent}>
                 <h1 className={styles.pageTitle}>
-                    <span className={styles.titleIcon}>🛒</span>
+                    <FiShoppingCart className={styles.titleIcon} style={{ marginRight: "10px" }} />
                     Shopping Cart
                 </h1>
 
                 {cart.length === 0 ? (
                     <div className={styles.emptyState}>
-                        <span className={styles.emptyIcon}>🛍️</span>
+                        <FiShoppingBag className={styles.emptyIcon} size={64} style={{ marginBottom: "16px" }} />
                         <h2 className={styles.emptyTitle}>Your cart is empty</h2>
                         <p className={styles.emptyDesc}>Looks like you haven't added anything to your cart yet.</p>
                         <Link to="/" className={styles.emptyLink}>Continue Shopping</Link>
@@ -119,7 +120,7 @@ function Cart(){
                                             className={styles.btnRemove}
                                             onClick={() => removeCartItem(item.CartItemId)}
                                         >
-                                            🗑️ Remove
+                                            <FiTrash2 size={14} style={{ marginRight: "6px" }} /> Remove
                                         </button>
                                         <button
                                             className={styles.btnBuy}

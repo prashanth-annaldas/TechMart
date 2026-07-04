@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 import { useToast } from "../context/ToastContext";
 import styles from "./AdminOrders.module.css";
 import ScrollButtons from "../components/ScrollButtons";
+import { FiMapPin } from "react-icons/fi";
 
 const AdminOrders = () => {
     const navigate = useNavigate();
@@ -90,6 +91,7 @@ const AdminOrders = () => {
                                     <div className={styles.orderMeta}>
                                         <h3 className={styles.productName}>{order.productName}</h3>
                                         <span className={styles.orderId}>Order ID: {order.orderId}</span>
+                                        <span className={styles.customerEmail}>Customer email: {order.customerEmail}</span>
                                     </div>
                                     
                                     <div className={styles.orderPriceQty}>
@@ -111,7 +113,10 @@ const AdminOrders = () => {
                                             <option value="CANCELLED">CANCELLED</option>
                                         </select>
                                         {order.city && (
-                                            <span className={styles.locationText}>📍 Destination: {order.city}</span>
+                                            <span className={styles.locationText}>
+                                                <FiMapPin style={{ marginRight: "4px", verticalAlign: "middle" }} /> 
+                                                Destination: {order.city}
+                                            </span>
                                         )}
                                     </div>
                                 </div>

@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 import ScrollButtons from "../components/ScrollButtons";
 import { useToast } from "../context/ToastContext";
 import styles from "./Payment.module.css";
+import { FiCreditCard, FiDollarSign } from "react-icons/fi";
 
 const Payment = () => {
     const [payments, setPayments] = useState([]);
@@ -68,14 +69,14 @@ const Payment = () => {
             <main className={styles.content}>
                 <div className={styles.pageHeader}>
                     <h1 className={styles.pageTitle}>
-                        <span>💳</span> Payment History
+                        <FiCreditCard size={24} style={{ marginRight: "10px", color: "var(--accent)", verticalAlign: "middle" }} /> Payment History
                     </h1>
                     <p className={styles.pageSubtitle}>View all your past transactions and payment details</p>
                 </div>
 
                 {payments.length === 0 ? (
                     <div className={styles.emptyState}>
-                        <span className={styles.emptyIcon}>💸</span>
+                        <FiDollarSign size={64} className={styles.emptyIcon} style={{ marginBottom: "16px" }} />
                         <h2 className={styles.emptyTitle}>No payments yet</h2>
                         <p className={styles.emptyDesc}>Once you make a purchase, your payment history will appear here.</p>
                         <Link to="/" className={styles.emptyLink}>Start Shopping</Link>

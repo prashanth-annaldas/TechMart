@@ -3,6 +3,7 @@ import api from "../services/api";
 import { useNavigate, Link } from "react-router-dom";
 import { useToast } from "../context/ToastContext";
 import styles from "./Auth.module.css";
+import { FiTruck, FiRefreshCw, FiShield } from "react-icons/fi";
 
 function Login() {
     const navigate = useNavigate();
@@ -58,15 +59,15 @@ function Login() {
                 </p>
                 <div className={styles.brandFeatures}>
                     <div className={styles.brandFeature}>
-                        <span className={styles.brandFeatureIcon}>🚚</span>
+                        <FiTruck className={styles.brandFeatureIcon} size={18} />
                         Free delivery on orders above ₹999
                     </div>
                     <div className={styles.brandFeature}>
-                        <span className={styles.brandFeatureIcon}>🔄</span>
+                        <FiRefreshCw className={styles.brandFeatureIcon} size={18} />
                         7-day easy returns
                     </div>
                     <div className={styles.brandFeature}>
-                        <span className={styles.brandFeatureIcon}>🛡️</span>
+                        <FiShield className={styles.brandFeatureIcon} size={18} />
                         1-year warranty on all products
                     </div>
                 </div>

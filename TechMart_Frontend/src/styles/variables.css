@@ -38,8 +38,8 @@
   --z-toast: 500;
 
   /* ── Container ────────────────────────────── */
-  --container-max: 1280px;
-  --container-padding: 24px;
+  --container-max: 1560px;
+  --container-padding: 32px;
 
   /* ═══ LIGHT THEME (Default) ════════════════ */
   --bg-primary: #f8fafc;

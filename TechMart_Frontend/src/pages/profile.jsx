@@ -2,19 +2,31 @@ import { useEffect, useState } from "react";
 import api from "../services/api";
 import Navbar from "../components/navbar";
 import Footer from "../components/Footer";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useToast } from "../context/ToastContext";
 import styles from "./Profile.module.css";
 import ScrollButtons from "../components/ScrollButtons";
+import { FiBox, FiMapPin, FiPlus, FiHome, FiPhone, FiSun, FiMoon } from "react-icons/fi";
+import { useTheme } from "../context/ThemeContext";
 
 function Profile() {
     const navigate = useNavigate();
+    const location = useLocation();
     const [activeTab, setActiveTab] = useState("profile"); // profile | orders | addresses
     const [user, setUser] = useState(null);
     const [addresses, setAddresses] = useState([]);
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const { showToast } = useToast();
+    const { theme, toggleTheme } = useTheme();
+
+    useEffect(() => {
+        const params = new URLSearchParams(location.search);
+        const tab = params.get("tab");
+        if (tab) {
+            setActiveTab(tab);
+        }
+    }, [location]);
 
     // Address Form State
     const emptyForm = {
@@ -223,7 +235,7 @@ function Profile() {
                     <div className={styles.panel}>
                         {orders.length === 0 ? (
                             <div className={styles.emptyState}>
-                                <span className={styles.emptyIcon}>📦</span>
+                                <FiBox size={48} className={styles.emptyIcon} style={{ marginBottom: "12px" }} />
                                 <h3 className={styles.emptyTitle}>You haven't placed any orders yet</h3>
                             </div>
                         ) : (
@@ -249,7 +261,10 @@ function Profile() {
                                                     {order.status}
                                                 </span>
                                                 {order.city && (
-                                                    <span className={styles.locationText}>📍 Shipped to: {order.city}</span>
+                                                    <span className={styles.locationText}>
+                                                        <FiMapPin style={{ marginRight: "4px", verticalAlign: "middle" }} /> 
+                                                        Shipped to: {order.city}
+                                                    </span>
                                                 )}
                                             </div>
                                         </div>
@@ -266,7 +281,7 @@ function Profile() {
                             <h2 className={styles.sectionTitle}>Manage Shipping Addresses</h2>
                             {!showForm && (
                                 <button className={styles.addBtn} onClick={addNewAddress}>
-                                    + Add New Address
+                                    <FiPlus style={{ marginRight: "4px" }} /> Add New Address
                                 </button>
                             )}
                         </div>
@@ -397,7 +412,7 @@ function Profile() {
                         {!showForm && (
                             addresses.length === 0 ? (
                                 <div className={styles.emptyState}>
-                                    <span className={styles.emptyIcon}>🏠</span>
+                                    <FiHome size={48} className={styles.emptyIcon} style={{ marginBottom: "12px" }} />
                                     <h3 className={styles.emptyTitle}>No shipping addresses saved</h3>
                                 </div>
                             ) : (
@@ -410,7 +425,10 @@ function Profile() {
                                                 {address.landmark && `Near ${address.landmark}, `}{address.city}<br />
                                                 {address.state}, {address.country} - {address.pincode}
                                             </p>
-                                            <span className={styles.addressPhone}>📞 {address.phoneNumber}</span>
+                                            <span className={styles.addressPhone}>
+                                                <FiPhone style={{ marginRight: "6px", verticalAlign: "middle" }} /> 
+                                                {address.phoneNumber}
+                                            </span>
                                             
                                             <div className={styles.addressActions}>
                                                 <button className={styles.editBtn} onClick={() => editAddress(address)}>
@@ -430,7 +448,29 @@ function Profile() {
 
                 {activeTab === "Account" && (
                     <div className={styles.panel}>
-                        <input type="text" />
+                        <h2 className={styles.sectionTitle}>Account Settings</h2>
+                        
+                        <div className={styles.settingsGroup}>
+                            <h3 className={styles.settingsSubTitle}>App Theme</h3>
+                            <p className={styles.settingsDescription}>Select your preferred appearance for the TechMart interface.</p>
+                            
+                            <div className={styles.themeSelectorGrid}>
+                                <button 
+                                    className={`${styles.themeOptionBtn} ${theme === 'light' ? styles.themeOptionBtnActive : ''}`}
+                                    onClick={() => theme !== 'light' && toggleTheme()}
+                                >
+                                    <FiSun className={styles.themeBtnIcon} />
+                                    <span>Light Mode</span>
+                                </button>
+                                <button 
+                                    className={`${styles.themeOptionBtn} ${theme === 'dark' ? styles.themeOptionBtnActive : ''}`}
+                                    onClick={() => theme !== 'dark' && toggleTheme()}
+                                >
+                                    <FiMoon className={styles.themeBtnIcon} />
+                                    <span>Dark Mode</span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 )}
             </main>

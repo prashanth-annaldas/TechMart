@@ -5,6 +5,7 @@ import Navbar from "../components/navbar";
 import Footer from "../components/Footer";
 import styles from "./Orders.module.css";
 import ScrollButtons from "../components/ScrollButtons";
+import { FiBox, FiShoppingBag, FiMapPin } from "react-icons/fi";
 
 function Orders() {
     const navigate = useNavigate();
@@ -59,14 +60,14 @@ function Orders() {
             <main className={styles.content}>
                 <div className={styles.pageHeader}>
                     <h1 className={styles.pageTitle}>
-                        <span>📦</span> My Orders
+                        <FiBox size={24} style={{ marginRight: "10px", color: "var(--accent)", verticalAlign: "middle" }} /> My Orders
                     </h1>
                     <p className={styles.pageSubtitle}>Track your shipments and view past purchases</p>
                 </div>
 
                 {orders.length === 0 ? (
                     <div className={styles.emptyState}>
-                        <span className={styles.emptyIcon}>🛍️</span>
+                        <FiShoppingBag size={64} className={styles.emptyIcon} style={{ marginBottom: "16px" }} />
                         <h2 className={styles.emptyTitle}>No orders found</h2>
                         <p className={styles.emptyDesc}>Looks like you haven't bought anything yet.</p>
                         <Link to="/" className={styles.emptyLink}>Start Shopping</Link>
@@ -94,7 +95,10 @@ function Orders() {
                                             {order.status}
                                         </span>
                                         {order.city && (
-                                            <span className={styles.locationText}>📍 Shipped to: {order.city}</span>
+                                            <span className={styles.locationText}>
+                                                <FiMapPin style={{ marginRight: "4px", verticalAlign: "middle" }} /> 
+                                                Shipped to: {order.city}
+                                            </span>
                                         )}
                                     </div>
                                 </div>

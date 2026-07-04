@@ -22,7 +22,7 @@ public class OrderController {
     }
 
     @GetMapping("/admin/orders")
-    public List<OrderResponse> getAllUserOrders(Authentication authentication){
+    public List<OrderResponse> getAllUserOrders(){
         return orderService.getAllUserOrders();
     }
 

@@ -29,9 +29,4 @@ public class AiController {
 
     @Autowired
     private AiService aiService;
-
-    @PostMapping("/recommend")
-    public String recommend(@RequestBody AiInputRequest dto) {
-        return aiService.recommend(dto.getQuery());
-    }
 }

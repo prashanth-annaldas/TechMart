@@ -146,6 +146,7 @@ public class OrderService {
                             ? item.getOrders().getAddress().getCity()
                             : "No Address"
             );
+            dto.setCustomerEmail(item.getOrders().getUser().getEmail());
 
             response.add(dto);
         }

@@ -11,6 +11,16 @@ public class OrderResponse {
     private Integer quantity;
     private String city;
 
+    private String customerEmail;
+
+    public String getCustomerEmail() {
+        return customerEmail;
+    }
+
+    public void setCustomerEmail(String customerEmail) {
+        this.customerEmail = customerEmail;
+    }
+
     public String getCity() {
         return city;
     }

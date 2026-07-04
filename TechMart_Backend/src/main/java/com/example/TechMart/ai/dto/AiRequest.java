@@ -5,7 +5,7 @@ import java.util.List;
 public class AiRequest {
 
     private String model;
-    private List<AiMessage> messages;
+    private List<ChatMessageDTO> messages;
     private double temperature;
 
     public double getTemperature() {
@@ -16,11 +16,11 @@ public class AiRequest {
         this.temperature = temperature;
     }
 
-    public List<AiMessage> getMessages() {
+    public List<ChatMessageDTO> getMessages() {
         return messages;
     }
 
-    public void setMessages(List<AiMessage> messages) {
+    public void setMessages(List<ChatMessageDTO> messages) {
         this.messages = messages;
     }
 

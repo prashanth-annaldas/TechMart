@@ -295,40 +295,40 @@ Open your browser at `http://localhost:5173`.
 ## Application Screenshots
 
 ## Home Page
-![Home Page](src/assets/screenshots/Home%20Page.png)
+![Home Page](TechMart_Frontend/src/assets/screenshots/Home%20Page.png)
 
 ## Login & Register
-![Login Register](src/assets/screenshots/Login%20Register.png)
+![Login Register](TechMart_Frontend/src/assets/screenshots/Login%20Register.png)
 
 ## Product Details
-![Product Details](src/assets/screenshots/ProductDetails.png)
+![Product Details](TechMart_Frontend/src/assets/screenshots/ProductDetails.png)
 
 ## Cart
-![Cart](src/assets/screenshots/Cart%20Items.png)
+![Cart](TechMart_Frontend/src/assets/screenshots/Cart%20Items.png)
 
 ## Wishlist
-![Wishlist](src/assets/screenshots/Wishlist.png)
+![Wishlist](TechMart_Frontend/src/assets/screenshots/Wishlist.png)
 
 ## Product Management
-![Product Management](src/assets/screenshots/Product%20Management.png)
+![Product Management](TechMart_Frontend/src/assets/screenshots/Product%20Management.png)
 
 ## Order Management
-![Order Management](src/assets/screenshots/Order%20Management.png)
+![Order Management](TechMart_Frontend/src/assets/screenshots/Order%20Management.png)
 
 ## Admin Dashboard
-![Admin Dashboard](src/assets/screenshots/Admin%20Dashboard.png)
+![Admin Dashboard](TechMart_Frontend/src/assets/screenshots/Admin%20Dashboard.png)
 
 ## Elasticsearch Search
-![Elasticsearch](src/assets/screenshots/Elasticsearch%20%26%20Suggestions.png)
+![Elasticsearch](TechMart_Frontend/src/assets/screenshots/Elasticsearch%20%26%20Suggestions.png)
 
 ## Razorpay Payment
-![Razorpay](src/assets/screenshots/Razorpay.png)
+![Razorpay](TechMart_Frontend/src/assets/screenshots/Razorpay.png)
 
 ## Email Notification
-![Email Notification](src/assets/screenshots/Email%20notification%20(Order%20confirmation).png)
+![Email Notification](TechMart_Frontend/src/assets/screenshots/Email%20notification%20(Order%20confirmation).png)
 
 ## AI Assistant
-![AI Assistant](src/assets/screenshots/TechMart%20(AI)%20assist.png)
+![AI Assistant](TechMart_Frontend/src/assets/screenshots/TechMart%20(AI)%20assist.png)
 
 ---
 

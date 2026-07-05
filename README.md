@@ -1,4 +1,4 @@
-# 🛒 TechMart - AI Powered Electronics E-Commerce Platform
+# TechMart - AI Powered Electronics E-Commerce Platform
 
 TechMart is a full-stack Electronics E-Commerce platform built using **Spring Boot 3**, **React 19**, **MySQL**, **Elasticsearch**, **Redis**, and **AI**. 
 
@@ -6,9 +6,9 @@ The project demonstrates modern backend development with secure authentication, 
 
 ---
 
-## 🚀 Features
+## Features
 
-### 🔐 Authentication & Security
+### Authentication & Security
 - **JWT Authentication**: Secure stateless authentication using JWT tokens.
 - **HttpOnly Cookie Authentication**: Tokens are stored in secure, HttpOnly cookies for enhanced protection against XSS attacks.
 - **Role-Based Authorization**: Restricts access to endpoints based on roles: `ROLE_CUSTOMER` and `ROLE_ADMIN`.
@@ -16,7 +16,7 @@ The project demonstrates modern backend development with secure authentication, 
 
 ---
 
-### 📦 Product Management (Admin Only)
+### Product Management (Admin Only)
 - **CRUD Operations**: Admins can add, update, delete, and view products.
 - **Bulk Import**: Endpoint supporting bulk insertion of product data.
 - **Product Categories**: Dynamic management of category relationships.
@@ -24,7 +24,7 @@ The project demonstrates modern backend development with secure authentication, 
 
 ---
 
-### 🛍 Shopping & Ordering (Customer)
+### Shopping & Ordering (Customer)
 - **Shopping Cart**: Add items, update quantities, and remove products dynamically.
 - **Wishlist**: Save favorite products for later purchase.
 - **Profile & Address Management**: Add, view, edit, and delete multiple shipping addresses.
@@ -34,7 +34,7 @@ The project demonstrates modern backend development with secure authentication, 
 
 ---
 
-### 📦 Order & Inventory Management (Admin Only)
+### Order & Inventory Management (Admin Only)
 - **Global Order Overview**: View all orders placed across the system.
 - **Order Status Updates**: Change order states (`PLACED`, `PROCESSING`, `SHIPPED`, `DELIVERED`, `CANCELLED`).
 - **Automated Inventory Stock Handling**: 
@@ -43,19 +43,19 @@ The project demonstrates modern backend development with secure authentication, 
 
 ---
 
-### ✉️ Automated Email Notifications
+### Automated Email Notifications
 - **Spring Mail Service**: Automatically sends a detailed HTML/text order confirmation email (via Gmail SMTP) upon successful payment verification.
 - Includes details like Order ID, products, quantity, total amount, and delivery message.
 
 ---
 
-### ⭐ Reviews & Ratings
+### Reviews & Ratings
 - **Customer Reviews**: Write text feedback and rate products from 1 to 5 stars.
 - **Dynamic Aggregate Metrics**: Automatically calculates average ratings and counts reviews per product.
 
 ---
 
-### 🔍 Smart Search
+### Smart Search
 Powered by **Elasticsearch** and optimized with **Redis Caching**:
 - **Full Text Search**: Queries matching name (boosted `^3`), category (boosted `^2`), and description.
 - **Typo Tolerance**: Enabled using Elasticsearch fuzzy search query configuration (`"fuzziness": "AUTO"`).
@@ -65,7 +65,7 @@ Powered by **Elasticsearch** and optimized with **Redis Caching**:
 
 ---
 
-### 🤖 AI Shopping Assistant
+### AI Shopping Assistant
 Powered by **Groq API** (`llama-3.3-70b-versatile` model):
 - **Intent Extraction**: Parses user queries using structured JSON format into categories, brand, budget constraints, keywords, purpose, and sort criteria.
 - **Filtered Product Feeds**: Before sending to the LLM, the system queries Elasticsearch and filters products programmatically by category, brand, budget range, and stock availability.
@@ -75,7 +75,7 @@ Powered by **Groq API** (`llama-3.3-70b-versatile` model):
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
 ### Backend
 - **Java 17**
@@ -106,7 +106,7 @@ Powered by **Groq API** (`llama-3.3-70b-versatile` model):
 
 ---
 
-## 🏗 Architecture
+## Architecture
 
 ```
 React (Vite)
@@ -131,7 +131,7 @@ Spring Boot REST API
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ### Backend Package Structure
 ```
@@ -153,7 +153,7 @@ src/main/java/com/example/TechMart/
 
 ---
 
-## 🤖 AI Workflow
+## AI Workflow
 
 ```
 User Query
@@ -179,7 +179,7 @@ Response Saved to MySQL Chat History
 
 ---
 
-## 📊 Database Schema
+## Database Schema
 
 ### Main Tables
 - **Users**: Authentication data, emails, and roles (`ADMIN` / `CUSTOMER`).
@@ -196,7 +196,7 @@ Response Saved to MySQL Chat History
 
 ---
 
-## 🔒 Roles & Access Control
+## Roles & Access Control
 
 ### Customer
 - Register & Login
@@ -216,7 +216,7 @@ Response Saved to MySQL Chat History
 
 ---
 
-## ⚙️ Setup & Configuration
+## Setup & Configuration
 
 ### Prerequisites
 Make sure you have the following installed:
@@ -269,10 +269,7 @@ groq.api.key=YOUR_GROQ_API_KEY
 ```
 
 > [!NOTE]
-> On startup, if the database is empty, the application runs the `AdminInitializer` to seed a default Administrator account:
-> - **Email:** `admin@gmail.com`
-> - **Password:** `Admin@453`
-> - **Name:** `Prashanth`
+> On first startup, the application automatically creates a default administrator account if one does not already exist.
 
 ### 3. Run Backend
 ```bash
@@ -295,12 +292,47 @@ Open your browser at `http://localhost:5173`.
 
 ---
 
-## 📸 Screenshots
-*(Add application screenshots here)*
+## Application Screenshots
+
+## Home Page
+![Home Page](src/assets/screenshots/Home%20Page.png)
+
+## Login & Register
+![Login Register](src/assets/screenshots/Login%20Register.png)
+
+## Product Details
+![Product Details](src/assets/screenshots/ProductDetails.png)
+
+## Cart
+![Cart](src/assets/screenshots/Cart%20Items.png)
+
+## Wishlist
+![Wishlist](src/assets/screenshots/Wishlist.png)
+
+## Product Management
+![Product Management](src/assets/screenshots/Product%20Management.png)
+
+## Order Management
+![Order Management](src/assets/screenshots/Order%20Management.png)
+
+## Admin Dashboard
+![Admin Dashboard](src/assets/screenshots/Admin%20Dashboard.png)
+
+## Elasticsearch Search
+![Elasticsearch](src/assets/screenshots/Elasticsearch%20%26%20Suggestions.png)
+
+## Razorpay Payment
+![Razorpay](src/assets/screenshots/Razorpay.png)
+
+## Email Notification
+![Email Notification](src/assets/screenshots/Email%20notification%20(Order%20confirmation).png)
+
+## AI Assistant
+![AI Assistant](src/assets/screenshots/TechMart%20(AI)%20assist.png)
 
 ---
 
-## 🚀 Future Improvements
+## Future Improvements
 - **Microservices Architecture**: Transition backend services to Spring Cloud.
 - **Dockerization**: Create Docker containers for the Backend, Frontend, MySQL, Redis, and Elasticsearch.
 - **Kubernetes**: Orchestrate containers using K8s clusters.
@@ -310,7 +342,7 @@ Open your browser at `http://localhost:5173`.
 
 ---
 
-## 👨‍💻 Author
+## Author
 **Prashanth**
 
 Full Stack Developer | Spring Boot | React | Java | Elasticsearch | Redis | AI Integrations

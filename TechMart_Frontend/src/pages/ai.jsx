@@ -204,7 +204,6 @@ const Ai = () => {
     // ── Switch active conversation ───────────
     const switchChat = async (convId) => {
         setActiveId(convId);
-        setSidebarOpen(false);
         await loadMessages(convId);
     };
 
@@ -213,7 +212,6 @@ const Ai = () => {
         setActiveId(null);
         setMessages([]);
         setInput("");
-        setSidebarOpen(false);
     };
 
     // ── Delete a conversation ────────────────
@@ -248,7 +246,7 @@ const Ai = () => {
             // If no active conversation, create one first
             // Backend expects: dto.message = email, authentication provides the title
             if (!convId) {
-                const createRes = await api.post("/api/chat", { message: userEmail });
+                const createRes = await api.post("/api/chat", { message: text });
                 convId = createRes.data.id;
                 setActiveId(convId);
                 // Refresh sidebar
@@ -388,6 +386,16 @@ const Ai = () => {
 
             {/* ── Main Chat Area ──────────── */}
             <main className={styles.mainArea}>
+                {/* Top Bar */}
+                <div>
+                    <button
+                        className={styles.sidebarToggle}
+                        onClick={() => setSidebarOpen((prev) => !prev)}
+                        aria-label="Toggle sidebar"
+                    >
+                        <FiSidebar size={20} />
+                    </button>
+                </div>
 
                 {/* Chat / Welcome */}
                 {messages.length === 0 && !loading ? (

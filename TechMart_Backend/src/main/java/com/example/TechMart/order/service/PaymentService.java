@@ -1,5 +1,7 @@
 package com.example.TechMart.order.service;
 
+import com.example.TechMart.coupon.entity.Coupon;
+import com.example.TechMart.coupon.repository.CouponRepository;
 import com.example.TechMart.order.dto.BuyNowRequest;
 import com.example.TechMart.order.entity.OrderItem;
 import com.example.TechMart.order.entity.Orders;
@@ -56,12 +58,43 @@ public class PaymentService {
     @Autowired
     private EmailService emailService;
 
+    @Autowired
+    private CouponRepository couponRepo;
+
     public RazorpayOrderResponse createOrder(BuyNowRequest dto, String email){
         try {
             Users user = userRepo.findByEmail(email).orElseThrow();
             Products product = productRepo.findById(dto.getProductId()).orElseThrow();
 
-            long amount = (long) (product.getPrice() * dto.getQuantity() * 100);
+            long totalAmount = Math.round(product.getPrice() * dto.getQuantity());
+
+            if (dto.getCode() != null && !dto.getCode().isBlank()) {
+
+                Coupon coupon = couponRepo.findByCode(dto.getCode())
+                        .orElseThrow(() -> new RuntimeException("Invalid Coupon"));
+
+                if (coupon.getDiscountType() == Coupon.DiscountType.FIXED) {
+
+                    totalAmount = Math.max(
+                            0L,
+                            Math.round(totalAmount - coupon.getDiscount())
+                    );
+
+                } else {
+
+                    long discount = Math.round(
+                            totalAmount * coupon.getDiscount() / 100
+                    );
+
+                    if (discount > coupon.getMaxDiscount()) {
+                        discount = coupon.getMaxDiscount().longValue();
+                    }
+
+                    totalAmount -= discount;
+                }
+            }
+
+            long amount = totalAmount * 100;
 
             RazorpayClient client = new RazorpayClient(keyId, secretKey);
 
@@ -123,6 +156,7 @@ public class PaymentService {
             buyNowRequest.setQuantity(dto.getQuantity());
             buyNowRequest.setAddressId(dto.getAddressId());
             buyNowRequest.setProductId(dto.getProductId());
+            buyNowRequest.setCode(dto.getCode());
 
             Orders orders = orderService.buyNow(
                     buyNowRequest,

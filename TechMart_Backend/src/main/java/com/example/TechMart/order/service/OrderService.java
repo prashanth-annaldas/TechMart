@@ -1,5 +1,7 @@
 package com.example.TechMart.order.service;
 
+import com.example.TechMart.coupon.entity.Coupon;
+import com.example.TechMart.coupon.repository.CouponRepository;
 import com.example.TechMart.elasticsearch.document.ProductDocument;
 import com.example.TechMart.elasticsearch.repository.ProductSearchRepository;
 import com.example.TechMart.elasticsearch.service.ProductSearchService;
@@ -18,6 +20,7 @@ import com.example.TechMart.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -47,6 +50,9 @@ public class OrderService {
     @Autowired
     private ProductSearchService productSearchService;
 
+    @Autowired
+    private CouponRepository couponRepo;
+
     public Orders buyNow(BuyNowRequest dto, String email){
 
         Users user = userRepo.findByEmail(email)
@@ -66,14 +72,60 @@ public class OrderService {
             return null;
         }
 
-        Long total_amount = Math.round(product.getPrice() * dto.getQuantity());
+        long totalAmount = Math.round(product.getPrice() * dto.getQuantity());
+
+        if (dto.getCode() != null && !dto.getCode().isBlank()) {
+
+            Coupon coupon = couponRepo.findByCode(dto.getCode())
+                    .orElseThrow(() -> new RuntimeException("Invalid Coupon"));
+
+            if (!coupon.isActive()) {
+                throw new RuntimeException("Coupon is inactive");
+            }
+
+            if (coupon.getStartDate().isAfter(LocalDate.now())) {
+                throw new RuntimeException("Coupon has not started yet");
+            }
+
+            if (coupon.getEndDate().isBefore(LocalDate.now())) {
+                throw new RuntimeException("Coupon has expired");
+            }
+
+            if (totalAmount < coupon.getMinOrderAmount()) {
+                throw new RuntimeException(
+                        "Minimum order amount is ₹" + coupon.getMinOrderAmount()
+                );
+            }
+
+            if (coupon.getDiscountType() == Coupon.DiscountType.FIXED) {
+
+                totalAmount = Math.max(
+                        0L,
+                        Math.round(totalAmount - coupon.getDiscount())
+                );
+
+            } else {
+
+                long discount = Math.round(
+                        totalAmount * coupon.getDiscount() / 100
+                );
+
+                if (coupon.getMaxDiscount() != null &&
+                        discount > coupon.getMaxDiscount()) {
+
+                    discount = coupon.getMaxDiscount().longValue();
+                }
+
+                totalAmount -= discount;
+            }
+        }
 
         product.setStock(product.getStock() - dto.getQuantity());
         product.setTotalSold(product.getTotalSold() + dto.getQuantity());
         productRepo.save(product);
 
         orders.setUser(user);
-        orders.setTotalAmount(total_amount);
+        orders.setTotalAmount(totalAmount);
         orders.setStatus(Orders.Status.PLACED);
         orders.setAddress(address);
 

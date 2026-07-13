@@ -16,6 +16,7 @@ import Checkout from './pages/Checkout';
 import AdminProducts from './pages/adminProducts';
 import AdminCategories from './pages/adminCategories';
 import AdminOrders from './pages/adminOrders';
+import Coupon from './pages/coupon';
 import Payment from "./pages/payment";
 import Ai from "./pages/ai";
 
@@ -43,6 +44,7 @@ function App() {
             <Route path="/admin/products" element={<AdminProducts />} />
             <Route path="/admin/categories" element={<AdminCategories />} />
             <Route path="/admin/orders" element={<AdminOrders />} />
+            <Route path="/admin/coupons" element={<Coupon />} />
 
             <Route path="/payments/history" element={<Payment />} />
             <Route path="/ai" element={<Ai />} />

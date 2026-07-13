@@ -4,11 +4,12 @@ import api from "../services/api";
 import styles from "./AddressSelector.module.css";
 import { HiXMark } from "react-icons/hi2";
 
-function AddressSelector({ productId, onClose, onPlaceOrder }) {
+function AddressSelector({ productId, onClose, code, onPlaceOrder }) {
     const [addresses, setAddresses] = useState([]);
     const [selectedAddressId, setSelectedAddressId] = useState(null);
     const [quantity, setQuantity] = useState(1);
     const [loading, setLoading] = useState(true);
+    const [couponCode, setCouponCode] = useState("");
 
     useEffect(() => {
         loadAddresses();
@@ -80,13 +81,14 @@ function AddressSelector({ productId, onClose, onPlaceOrder }) {
                     </>
                 )}
 
+                <input type="text" placeholder="Enter Coupon Code" value={couponCode} onChange={(e) => setCouponCode(e.target.value)} className={styles.couponInput} />
                 <div className={styles.actions}>
                     <button className={styles.cancelBtn} onClick={onClose}>
                         Cancel
                     </button>
                     <button
                         className={styles.submitBtn}
-                        onClick={() => onPlaceOrder(productId, selectedAddressId, quantity)}
+                        onClick={() => onPlaceOrder(productId, selectedAddressId, couponCode, quantity)}
                         disabled={!selectedAddressId}
                     >
                         Confirm Order

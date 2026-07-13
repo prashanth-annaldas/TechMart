@@ -24,6 +24,7 @@ function ProductDetail() {
     const [comment, setComment] = useState("");
     const [reviews, setReviews] = useState([]);
     const [showAllReviews, setShowAllReviews] = useState(false);
+    const [code, setCode] = useState("");
     
     // Address Modal (Buy Now)
     const [showAddressModal, setShowAddressModal] = useState(false);
@@ -182,7 +183,7 @@ function ProductDetail() {
         setShowAddressModal(true);
     };
 
-    const placeOrder = async (productId, selectedAddressId, qty) => {
+    const placeOrder = async (productId, selectedAddressId, code, quantity) => {
         if (!selectedAddressId) {
             showToast("Please select an address", "warning");
             return;
@@ -191,7 +192,8 @@ function ProductDetail() {
         try {
             const orderRes = await api.post("/api/payment/buy-now/create-order", {
                 productId,
-                quantity: qty
+                quantity,
+                code,
             });
 
             if (!window.Razorpay) {
@@ -214,8 +216,9 @@ function ProductDetail() {
                             "/api/payment/buy-now/verify",
                             {
                                 productId,
-                                quantity: qty,
+                                quantity,
                                 addressId: selectedAddressId,
+                                couponCode: code,
 
                                 razorpayOrderId:
                                     response.razorpay_order_id,
@@ -542,7 +545,9 @@ function ProductDetail() {
                 <AddressSelector
                     productId={product.id}
                     onClose={() => setShowAddressModal(false)}
-                    onPlaceOrder={(prodId, addrId) => placeOrder(prodId, addrId, quantity)}
+                    code={code}
+                    quantity={quantity}
+                    onPlaceOrder={placeOrder}
                 />
             )}
 

@@ -187,6 +187,9 @@ function Navbar({ searchVal, setSearchVal, loadSuggestions, suggestions, setSugg
                                             <Link to="/admin/orders" className={styles.profileMenuItem} onClick={() => setProfileMenuOpen(false)}>
                                                 Manage Orders
                                             </Link>
+                                            <Link to="/admin/coupons" className={styles.profileMenuItem} onClick={() => setProfileMenuOpen(false)}>
+                                                Manage Coupons
+                                            </Link>
                                         </>
                                     )}
                                     <div className={styles.profileMenuDivider}></div>
